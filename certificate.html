@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索完成 | 九龍記憶庫</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .certificate-container {
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        .certificate {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            padding: 50px 40px;
+            border-radius: 25px;
+            border: 15px solid #ff6b00;
+            position: relative;
+            margin: 30px 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        .ribbon {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b00;
+            color: white;
+            padding: 10px 40px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #ff6b00;
+        }
+        
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .share-btn {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .volunteer-btn {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .home-btn {
+            background: #95a5a6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <div class="certificate">
+            <div class="ribbon">
+                <i class="fas fa-trophy"></i> 探索成就證書
+            </div>
+            
+            <h1 style="color: #2d3436; margin-top: 30px;">🏆 九龍記憶庫</h1>
+            <h2 style="color: #2d3436; margin-bottom: 30px;">歷史探索成就證書</h2>
+            
+            <div style="background: rgba(255,255,255,0.9); padding: 25px; border-radius: 15px; margin: 20px 0;">
+                <p style="font-size: 1.2rem;">此證書頒發予</p>
+                <h3 style="color: #2d3436; margin: 10px 0;" id="userName">探索者</h3>
+                <p>以表彰其完成九龍記憶庫完整探索之旅</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <i class="fas fa-map-marker-alt" style="color: #e74c3c; font-size: 24px;"></i>
+                    <h4 id="locationsCount">5</h4>
+                    <p>歷史地點探索</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-book" style="color: #3498db; font-size: 24px;"></i>
+                    <h4 id="factsCount">20</h4>
+                    <p>歷史知識收集</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock" style="color: #9b59b6; font-size: 24px;"></i>
+                    <h4 id="completionDate">今日</h4>
+                    <p>完成日期</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star" style="color: #f1c40f; font-size: 24px;"></i>
+                    <h4>100%</h4>
+                    <p>完成進度</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <p style="color: #666; font-style: italic;">
+                    "探索過去，理解現在，啟發未來"
+                </p>
+            </div>
+        </div>
+        
+        <div style="margin: 30px 0;">
+            <button class="share-btn" onclick="shareCertificate()">
+                <i class="fas fa-share-alt"></i> 分享成就
+            </button>
+            <button class="volunteer-btn" onclick="showVolunteerOptions()">
+                <i class="fas fa-hands-helping"></i> 參與義工
+            </button>
+            <button class="home-btn" onclick="goHome()">
+                <i class="fas fa-home"></i> 返回首頁
+            </button>
+        </div>
+        
+        <div id="volunteerSection" style="display: none; background: white; padding: 25px; border-radius: 15px; margin: 20px 0;">
+            <h3 style="color: #2d3436; margin-bottom: 20px;">🎯 推薦義工機會</h3>
+            <div style="text-align: left;">
+                <div style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 10px;">
+                    <h4>社區歷史導賞員</h4>
+                    <p>帶領遊客探索九龍城歷史景點</p>
+                    <button onclick="applyVolunteer('導賞員')" style="background: #27ae60; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">申請參與</button>
+                </div>
+                <div style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 10px;">
+                    <h4>歷史資料整理</h4>
+                    <p>協助數碼化歷史檔案和照片</p>
+                    <button onclick="applyVolunteer('資料整理')" style="background: #27ae60; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">申請參與</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 從本地存儲加載用戶數據
+        window.onload = function() {
+            const userData = JSON.parse(localStorage.getItem('kowloon_user_data'));
+            if (userData) {
+                document.getElementById('userName').textContent = userData.teamName;
+                document.getElementById('locationsCount').textContent = userData.completedMissions.length;
+                document.getElementById('factsCount').textContent = userData.collectedFacts.length;
+                document.getElementById('completionDate').textContent = new Date().toLocaleDateString('zh-HK');
+            }
+            
+            // 追蹤證書查看
+            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+            analyticsData.push({
+                timestamp: new Date().toISOString(),
+                event: 'certificate_view',
+                user: userData ? userData.userEmail : 'unknown'
+            });
+            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+        };
+        
+        function shareCertificate() {
+            const userData = JSON.parse(localStorage.getItem('kowloon_user_data'));
+            const text = `我剛剛完成了「九龍記憶庫」AR歷史解謎之旅！探索了${userData.completedMissions.length}個歷史地點，收集了${userData.collectedFacts.length}個歷史知識。🏆\n\n一起來探索香港的歷史記憶吧！`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: '九龍記憶庫探索證書',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(text + '\n' + window.location.href);
+                alert('證書內容已複製到剪貼簿！請貼到社交媒體分享。');
+            }
+        }
+        
+        function showVolunteerOptions() {
+            document.getElementById('volunteerSection').style.display = 'block';
+        }
+        
+        function applyVolunteer(role) {
+            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+            analyticsData.push({
+                timestamp: new Date().toISOString(),
+                event: 'volunteer_application',
+                role: role
+            });
+            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+            
+            alert(`感謝您申請${role}義工！我們將在3個工作日內聯絡您。`);
+        }
+        
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
