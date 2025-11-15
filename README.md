@@ -1,2 +1,2 @@
-# kowloon-memory.github.io
-九龙城AR解谜游戏 - 志愿团体筹款项目
+# kowloon-memory-game
+九龍記憶庫AR解謎遊戲
