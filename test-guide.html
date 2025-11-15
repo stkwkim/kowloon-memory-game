@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試指南 | 九龍記憶庫</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .success { border-left-color: #10b981; }
+        .warning { border-left-color: #f59e0b; }
+        .error { border-left-color: #ef4444; }
+        
+        code {
+            background: #1f2937;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 九龍記憶庫測試指南</h1>
+    
+    <div class="test-section success">
+        <h2>✅ 基本功能測試</h2>
+        <ol>
+            <li>訪問 <code>index.html</code> - 應該顯示專業首頁</li>
+            <li>點擊「立即預約體驗」- 應該顯示預約表單</li>
+            <li>填寫表單並提交 - 應該顯示登入界面</li>
+            <li>使用測試確認碼 <code>TEST123</code> 登入</li>
+            <li>應該成功進入遊戲界面</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>🎮 遊戲流程測試</h2>
+        <ol>
+            <li>進入遊戲後，應該顯示第一關內容</li>
+            <li>點擊「完成任務」- 應該顯示完成動畫</li>
+            <li>自動進入下一關（如果配置了多個關卡）</li>
+            <li>測試QR碼生成功能</li>
+            <li>測試AR場景切換功能</li>
+        </ol>
+    </div>
+    
+    <div class="test-section warning">
+        <h2>🔧 AR功能測試</h2>
+        <p><strong>當前配置的AR方法:</strong> <code id="currentARMethod">檢測中...</code></p>
+        
+        <button onclick="testARMethods()">測試AR方法切換</button>
+        <div id="arTestResults" style="margin-top: 10px;"></div>
+        
+        <h3>可用的AR方法:</h3>
+        <ul>
+            <li><strong>QR碼掃描</strong> - 基本功能，所有設備支持</li>
+            <li><strong>GPS定位</strong> - 需要設備支持地理位置</li>
+            <li><strong>圖像識別</strong> - 需要額外套件（當前禁用）</li>
+            <li><strong>AR標記</strong> - 需要AR.js庫（當前禁用）</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔑 密碼系統測試</h2>
+        <p><strong>當前密碼生成方法:</strong> <code id="passwordMethod">檢測中...</code></p>
+        
+        <div>
+            <label>測試隊伍名稱:</label>
+            <input type="text" id="testTeamName" value="測試隊伍" style="padding: 5px; margin: 0 10px;">
+            <button onclick="testPasswordSystem()">生成密碼</button>
+            <p>生成密碼: <code id="generatedPassword">-</code></p>
+        </div>
+    </div>
+    
+    <div class="test-section error">
+        <h2>🚨 故障排除</h2>
+        <h3>常見問題:</h3>
+        <ul>
+            <li><strong>頁面顯示錯誤:</strong> 檢查瀏覽器控制台錯誤信息</li>
+            <li><strong>AR功能無法使用:</strong> 確保有相機權限，或切換到QR碼模式</li>
+            <li><strong>GPS不工作:</strong> 檢查設備GPS功能，或在戶外測試</li>
+            <li><strong>遊戲進度丟失:</strong> 檢查瀏覽器本地存儲功能</li>
+        </ul>
+        
+        <button onclick="runDiagnostics()">運行系統診斷</button>
+        <div id="diagnosticsResults" style="margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        // 加載AR配置
+        const AR_CONFIG = {
+            currentMethod: 'qr',
+            methods: {
+                QR: { id: 'qr', name: 'QR碼掃描', enabled: true },
+                GPS: { id: 'gps', name: 'GPS定位', enabled: true },
+                IMAGE: { id: 'image', name: '圖像識別', enabled: false },
+                MARKER: { id: 'marker', name: 'AR標記', enabled: false }
+            }
+        };
+        
+        // 密碼系統
+        const PasswordSystem = {
+            method: 'dynamic',
+            fixedCode: '8888',
+            
+            generateDynamic: function(teamName) {
+                const teamCodes = { '測試隊伍': '2024', '九龍記憶': '8888' };
+                return teamCodes[teamName] || '1234';
+            },
+            
+            getPassword: function(teamName) {
+                return this.method === 'fixed' ? this.fixedCode : this.generateDynamic(teamName);
+            }
+        };
+        
+        // 初始化顯示
+        document.getElementById('currentARMethod').textContent = AR_CONFIG.methods[AR_CONFIG.currentMethod.toUpperCase()].name;
+        document.getElementById('passwordMethod').textContent = PasswordSystem.method === 'fixed' ? '固定密碼' : '動態生成';
+        
+        // 測試AR方法
+        function testARMethods() {
+            const results = document.getElementById('arTestResults');
+            results.innerHTML = '<p>測試AR方法切換...</p>';
+            
+            let output = '';
+            
+            // 測試QR碼方法
+            output += `<p>✅ QR碼方法: ${AR_CONFIG.methods.QR.enabled ? '可用' : '不可用'}</p>`;
+            
+            // 測試GPS方法
+            if (navigator.geolocation) {
+                output += `<p>✅ GPS方法: 設備支持地理位置</p>`;
+            } else {
+                output += `<p>❌ GPS方法: 設備不支持地理位置</p>`;
+            }
+            
+            // 測試其他方法
+            output += `<p>ℹ️ 圖像識別: ${AR_CONFIG.methods.IMAGE.enabled ? '可用' : '需要額外套件'}</p>`;
+            output += `<p>ℹ️ AR標記: ${AR_CONFIG.methods.MARKER.enabled ? '可用' : '需要AR.js庫'}</p>`;
+            
+            results.innerHTML = output;
+        }
+        
+        // 測試密碼系統
+        function testPasswordSystem() {
+            const teamName = document.getElementById('testTeamName').value;
+            const password = PasswordSystem.getPassword(teamName);
+            document.getElementById('generatedPassword').textContent = password;
+        }
+        
+        // 運行診斷
+        function runDiagnostics() {
+            const results = document.getElementById('diagnosticsResults');
+            results.innerHTML = '<p>運行系統診斷...</p>';
+            
+            let diagnostics = '';
+            
+            // 檢查本地存儲
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                diagnostics += '<p>✅ 本地存儲: 正常工作</p>';
+            } catch (e) {
+                diagnostics += '<p>❌ 本地存儲: 不可用</p>';
+            }
+            
+            // 檢查相機支持
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                diagnostics += '<p>✅ 相機API: 支持</p>';
+            } else {
+                diagnostics += '<p>❌ 相機API: 不支持</p>';
+            }
+            
+            // 檢查地理位置
+            if (navigator.geolocation) {
+                diagnostics += '<p>✅ 地理位置: 支持</p>';
+            } else {
+                diagnostics += '<p>❌ 地理位置: 不支持</p>';
+            }
+            
+            // 檢查在線狀態
+            diagnostics += `<p>🌐 網絡狀態: ${navigator.onLine ? '在線' : '離線'}</p>`;
+            
+            results.innerHTML = diagnostics;
+        }
+        
+        // 初始診斷
+        runDiagnostics();
+    </script>
+</body>
+</html>
