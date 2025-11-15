@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九龍記憶庫 - AR歷史解謎體驗 | 義工團體籌款</title>
-    <meta name="description" content="透過AR技術探索土瓜灣至九龍城的百年歷史。4-6小時沉浸式體驗，收益支持本地義工團體發展。">
+    <title>九龍記憶庫 - AR歷史解謎體驗 | 社區文化項目</title>
+    <meta name="description" content="免費AR歷史探索體驗，透過科技了解土瓜灣至九龍城的百年歷史。社區文化保育項目。">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -13,8 +13,6 @@
             --secondary: #7c3aed;
             --accent: #f59e0b;
             --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
             --dark: #1f2937;
             --light: #f8fafc;
         }
@@ -159,87 +157,39 @@
             font-size: 2rem;
         }
         
-        /* 價格區域 */
+        /* 單一價格區域 */
         .pricing {
             padding: 80px 2rem;
             background: var(--light);
-        }
-        
-        .section-header {
             text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .section-header p {
-            font-size: 1.2rem;
-            color: #6b7280;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .pricing-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
         }
         
         .pricing-card {
             background: white;
             border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
+            padding: 4rem 3rem;
+            max-width: 500px;
+            margin: 0 auto;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .pricing-card.featured {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-        }
-        
-        .pricing-badge {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
+            border: 3px solid var(--primary);
         }
         
         .price {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
             color: var(--primary);
             margin: 1.5rem 0;
         }
         
-        .price span {
-            font-size: 1rem;
+        .price-note {
             color: #6b7280;
+            margin-bottom: 2rem;
         }
         
         .features-list {
             list-style: none;
             margin: 2rem 0;
+            text-align: left;
         }
         
         .features-list li {
@@ -261,7 +211,7 @@
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -319,14 +269,6 @@
             .nav-links {
                 display: none;
             }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -341,7 +283,7 @@
             <div class="nav-links">
                 <a href="#about">關於我們</a>
                 <a href="#features">體驗特色</a>
-                <a href="#pricing">支持我們</a>
+                <a href="#pricing">參與體驗</a>
                 <a href="#contact">聯絡我們</a>
             </div>
         </div>
@@ -351,9 +293,9 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>探索九龍失落的記憶</h1>
-            <p>透過AR技術重現土瓜灣至九龍城的百年歷史。4-6小時沉浸式體驗，收益全數支持本地義工團體發展。</p>
+            <p>免費AR歷史探索體驗，透過科技了解土瓜灣至九龍城的百年歷史。社區文化保育項目，人人平等參與。</p>
             <button class="cta-button" onclick="showBookingForm()">
-                立即預約體驗 <i class="fas fa-arrow-right"></i>
+                免費參與體驗 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </section>
@@ -361,16 +303,16 @@
     <!-- 特色區域 -->
     <section class="features" id="features">
         <div class="section-header">
-            <h2>獨特體驗特色</h2>
-            <p>結合科技與歷史的全新探索方式</p>
+            <h2>完全免費的獨特體驗</h2>
+            <p>使用100%免費工具，無需安裝任何APP</p>
         </div>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-vr-cardboard"></i>
+                    <i class="fas fa-qrcode"></i>
                 </div>
-                <h3>AR技術重現</h3>
-                <p>透過增強現實技術，在真實場景中重現歷史畫面，讓過去與現在完美融合。</p>
+                <h3>網頁AR技術</h3>
+                <p>無需下載APP，直接用手機瀏覽器即可體驗AR內容，完全免費。</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
@@ -381,133 +323,69 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-hands-helping"></i>
+                    <i class="fas fa-users"></i>
                 </div>
-                <h3>公益支持</h3>
-                <p>所有收益用於支持本地義工團體，推動社區文化保育工作。</p>
+                <h3>平等參與</h3>
+                <p>單一體驗標準，所有人享受相同優質內容，消除數位落差。</p>
             </div>
         </div>
     </section>
 
-    <!-- 價格區域 -->
+    <!-- 單一價格區域 -->
     <section class="pricing" id="pricing">
         <div class="section-header">
-            <h2>支持義工發展</h2>
-            <p>選擇適合您的體驗方案，共同支持社區文化保育</p>
+            <h2>免費參與體驗</h2>
+            <p>社區文化項目，人人平等參與</p>
         </div>
-        <div class="pricing-grid">
-            <!-- 基礎方案 -->
-            <div class="pricing-card">
-                <h3>基礎探索</h3>
-                <div class="price">$128<span>/位</span></div>
-                <ul class="features-list">
-                    <li>基礎AR歷史體驗</li>
-                    <li>4-6小時自助探索</li>
-                    <li>電子紀念證書</li>
-                    <li>基礎社區資訊</li>
-                    <li>電郵技術支援</li>
-                </ul>
-                <button class="pricing-button" onclick="selectPlan('basic')">
-                    選擇方案
-                </button>
-            </div>
+        <div class="pricing-card">
+            <h3>標準體驗</h3>
+            <div class="price">完全免費</div>
+            <p class="price-note">社區文化保育項目 • 人人平等參與</p>
             
-            <!-- 標準方案 -->
-            <div class="pricing-card featured">
-                <div class="pricing-badge">最受歡迎</div>
-                <h3>標準體驗</h3>
-                <div class="price">$198<span>/位</span></div>
-                <ul class="features-list">
-                    <li>完整AR歷史體驗</li>
-                    <li>專屬隊伍管理</li>
-                    <li>進階歷史內容解鎖</li>
-                    <li>優先技術支援</li>
-                    <li>義工組織推薦</li>
-                    <li>社區活動邀請</li>
-                </ul>
-                <button class="pricing-button" onclick="selectPlan('standard')">
-                    選擇方案
-                </button>
-            </div>
+            <ul class="features-list">
+                <li>完整AR歷史體驗</li>
+                <li>5個歷史地點探索</li>
+                <li>網頁AR技術，無需安裝APP</li>
+                <li>電子紀念證書</li>
+                <li>社區文化資料庫</li>
+                <li>技術支援服務</li>
+            </ul>
             
-            <!-- 贊助方案 -->
-            <div class="pricing-card">
-                <h3>贊助體驗</h3>
-                <div class="price">$398<span>/位</span></div>
-                <ul class="features-list">
-                    <li>專家導覽體驗</li>
-                    <li>獨家歷史檔案存取</li>
-                    <li>專業攝影服務</li>
-                    <li>社區領袖交流機會</li>
-                    <li>永久贊助會員資格</li>
-                    <li>年度活動優先參與</li>
-                </ul>
-                <button class="pricing-button" onclick="selectPlan('premium')">
-                    贊助我們
-                </button>
-            </div>
+            <button class="pricing-button" onclick="showBookingForm()">
+                立即免費參與
+            </button>
         </div>
     </section>
 
     <!-- 遊戲預約界面 -->
     <div class="game-container" id="bookingContainer">
         <div class="section-header">
-            <h2>預約您的歷史之旅</h2>
-            <p>填寫資料開始難忘的AR探索體驗</p>
+            <h2>參與歷史探索體驗</h2>
+            <p>填寫資料開始難忘的AR探索之旅</p>
         </div>
         
         <form id="bookingForm">
             <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">完整姓名</label>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">參與者名稱</label>
                 <input type="text" id="fullName" placeholder="請輸入您的姓名" required 
                        style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
             </div>
             
             <div style="margin-bottom: 1rem;">
                 <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">電子郵件</label>
-                <input type="email" id="userEmail" placeholder="請輸入您的郵件" required 
-                       style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">電話號碼</label>
-                <input type="tel" id="userPhone" placeholder="請輸入您的電話" required 
-                       style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">選擇方案</label>
-                <select id="planType" required 
-                        style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
-                    <option value="">請選擇體驗方案</option>
-                    <option value="basic">基礎探索 - $128/位</option>
-                    <option value="standard">標準體驗 - $198/位</option>
-                    <option value="premium">贊助體驗 - $398/位</option>
-                </select>
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">參與人數</label>
-                <input type="number" id="participantCount" min="1" value="1" 
+                <input type="email" id="userEmail" placeholder="用於發送確認碼" required 
                        style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
             </div>
             
             <div style="margin-bottom: 2rem;">
                 <label style="display: flex; align-items: center; gap: 0.5rem;">
                     <input type="checkbox" id="consentData" required>
-                    <span>我同意收集我的資料作大數據分析及後續聯絡</span>
+                    <span>我同意收集我的資料作社區文化研究用途</span>
                 </label>
             </div>
             
-            <div style="margin-bottom: 2rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                    <input type="checkbox" id="consentVolunteer">
-                    <span>我願意接收義工組織及社區活動資訊</span>
-                </label>
-            </div>
-            
-            <button type="submit" class="pricing-button" style="margin-top: 1rem;">
-                <i class="fas fa-lock"></i> 確認預約及支持
+            <button type="submit" class="pricing-button">
+                <i class="fas fa-play"></i> 開始免費體驗
             </button>
         </form>
     </div>
@@ -515,13 +393,13 @@
     <!-- 遊戲登入界面 -->
     <div class="game-container" id="loginContainer">
         <div class="section-header">
-            <h2>歡迎回來！</h2>
+            <h2>歡迎參與體驗！</h2>
             <p>請輸入您的確認資料開始遊戲</p>
         </div>
         
         <div style="margin-bottom: 1rem;">
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">電子郵件</label>
-            <input type="email" id="loginEmail" placeholder="預約時使用的郵件" 
+            <input type="email" id="loginEmail" placeholder="參與時使用的郵件" 
                    style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
         </div>
         
@@ -547,7 +425,6 @@
         </div>
     </div>
 
-    <script src="game.js"></script>
     <script>
         // 顯示預約表單
         function showBookingForm() {
@@ -555,16 +432,9 @@
             document.getElementById('loginContainer').classList.remove('active');
             document.getElementById('gameContainer').classList.remove('active');
             
-            // 滾動到表單位置
             document.getElementById('bookingContainer').scrollIntoView({ 
                 behavior: 'smooth' 
             });
-        }
-        
-        // 選擇方案
-        function selectPlan(planType) {
-            document.getElementById('planType').value = planType;
-            showBookingForm();
         }
         
         // 表單提交
@@ -578,20 +448,21 @@
             const formData = {
                 name: document.getElementById('fullName').value,
                 email: document.getElementById('userEmail').value,
-                phone: document.getElementById('userPhone').value,
-                plan: document.getElementById('planType').value,
-                participants: document.getElementById('participantCount').value,
-                consentData: document.getElementById('consentData').checked,
-                consentVolunteer: document.getElementById('consentVolunteer').checked
+                consentData: document.getElementById('consentData').checked
             };
             
-            // 簡單前端驗證
-            if (!formData.name || !formData.email || !formData.phone || !formData.plan) {
+            if (!formData.name || !formData.email) {
                 alert('請填寫所有必填欄位');
                 return;
             }
             
-            // 顯示預約成功界面
+            // 保存用戶數據
+            localStorage.setItem('kowloon_user_data', JSON.stringify({
+                name: formData.name,
+                email: formData.email
+            }));
+            
+            // 顯示登入界面
             showLoginForm(formData.email);
         }
         
@@ -602,9 +473,8 @@
             document.getElementById('gameContainer').classList.remove('active');
             
             document.getElementById('loginEmail').value = email;
-            document.getElementById('loginCode').value = 'TEST123'; // 測試用確認碼
+            document.getElementById('loginCode').value = 'KLN2024'; // 固定確認碼
             
-            // 滾動到登入界面
             document.getElementById('loginContainer').scrollIntoView({ 
                 behavior: 'smooth' 
             });
@@ -649,12 +519,21 @@
                         <h4>📝 任務說明</h4>
                         <p>拍攝鯨魚石與現代建築的對比照片，思考海岸線的變遷對社區的影響。</p>
                     </div>
+                    
+                    <!-- 網頁AR區域 -->
+                    <div style="background: #000; color: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4><i class="fas fa-vr-cardboard"></i> AR歷史重現</h4>
+                        <p>點擊下方按鈕啟動AR相機，重現1960年代的海岸線景象：</p>
+                        <button onclick="startWebAR()" style="background: var(--accent); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; margin-top: 1rem; cursor: pointer;">
+                            <i class="fas fa-camera"></i> 啟動AR相機
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="qr-container">
                     <h4>📱 掃描QR碼繼續</h4>
                     <div class="qr-code" id="qrCode">
-                        <!-- QR碼將動態生成 -->
+                        <!-- QR碼將在這裡顯示 -->
                     </div>
                     <p style="color: #6b7280; margin-top: 1rem;">掃描此QR碼獲取下一關提示</p>
                 </div>
@@ -668,16 +547,96 @@
             generateQRCode('mission2.html');
         }
         
-        // 生成QR碼
+        // 生成QR碼 - 使用可靠的免費服務
         function generateQRCode(url) {
-            const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(url)}&choe=UTF-8`;
-            document.getElementById('qrCode').innerHTML = `<img src="${qrUrl}" alt="QR Code" style="width: 100%; height: 100%; border-radius: 5px;">`;
+            const qrContainer = document.getElementById('qrCode');
+            if (!qrContainer) return;
+            
+            // 使用多個免費QR碼API確保可靠性
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.origin + '/' + url)}`;
+            
+            qrContainer.innerHTML = `
+                <img src="${qrUrl}" 
+                     alt="QR Code" 
+                     style="width: 100%; height: 100%; border-radius: 5px;"
+                     onerror="this.src='https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(url)}&choe=UTF-8'">
+            `;
+        }
+        
+        // 網頁AR功能 - 完全免費，無需安裝
+        function startWebAR() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // 請求相機權限
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        showARCamera(stream);
+                    })
+                    .catch(function(error) {
+                        // 如果相機不可用，顯示AR模擬內容
+                        showARFallbackContent();
+                    });
+            } else {
+                showARFallbackContent();
+            }
+        }
+        
+        // 顯示AR相機
+        function showARCamera(stream) {
+            const missionCard = document.querySelector('.mission-card');
+            missionCard.innerHTML += `
+                <div style="background: #000; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0; text-align: center;">
+                    <h4><i class="fas fa-camera"></i> AR相機已啟動</h4>
+                    <video autoplay playsinline style="width: 100%; max-width: 300px; border-radius: 8px; margin: 1rem 0;"></video>
+                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5>🏗️ 歷史重現</h5>
+                        <p>1960年代，這裡是繁忙的漁港碼頭</p>
+                        <p>海岸線比現在向南延伸約500米</p>
+                    </div>
+                    <button onclick="stopARCamera()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-times"></i> 關閉AR
+                    </button>
+                </div>
+            `;
+            
+            // 顯示相機畫面
+            const video = missionCard.querySelector('video');
+            video.srcObject = stream;
+        }
+        
+        // 顯示AR備用內容
+        function showARFallbackContent() {
+            const missionCard = document.querySelector('.mission-card');
+            missionCard.innerHTML += `
+                <div style="background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                    <h4><i class="fas fa-history"></i> 歷史場景重現</h4>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5>1960年代 土瓜灣海邊</h5>
+                        <p>📍 當時這裡是漁船停泊的碼頭</p>
+                        <p>🌊 海岸線位於現在位置以南500米</p>
+                        <p>🏭 周邊是漁村和小型船廠</p>
+                        <p>🚢 每日有數十艘漁船在此進出</p>
+                    </div>
+                    <div style="font-style: italic; color: #93c5fd;">
+                        "當年的漁民清晨出海，傍晚歸來，整個海邊充滿生氣..."
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 停止AR相機
+        function stopARCamera() {
+            const video = document.querySelector('video');
+            if (video && video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+            // 重新加載任務內容
+            initGame(document.getElementById('loginEmail').value);
         }
         
         // 完成任務
         function completeMission() {
             alert('🎉 任務完成！已解鎖下一關卡。');
-            // 這裡可以加載下一關的邏輯
+            // 這裡可以加載下一關
         }
     </script>
 </body>
