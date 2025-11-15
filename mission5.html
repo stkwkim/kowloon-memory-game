@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五關 - 紅磡觀音廟 | 九龍記憶庫</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #8B7355 0%, #A0522D 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .mission-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .heritage-card {
+            background: linear-gradient(135deg, #8B7355, #A0522D);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #8B7355, #A0522D);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .timeline {
+            margin: 25px 0;
+        }
+        
+        .era {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #8B7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="mission-container">
+        <div class="header">
+            <h1 style="color: #8B7355;"><i class="fas fa-pray"></i> 最終關解鎖</h1>
+            <p style="color: #666; margin-top: 10px;">紅磡觀音廟 - 漁民信仰見證</p>
+        </div>
+        
+        <div class="heritage-card">
+            <h3><i class="fas fa-history"></i> 百年信仰傳承</h3>
+            <p>紅磡觀音廟建於清朝同治年間，見證了紅磡從漁港到現代市區的完整轉變歷程。</p>
+        </div>
+        
+        <div class="timeline">
+            <h3 style="color: #8B7355; margin-bottom: 15px;">⏳ 歷史演變</h3>
+            
+            <div class="era">
+                <strong>清朝時期</strong>
+                <p>漁港時期建成，漁民出海前祈福場所</p>
+            </div>
+            
+            <div class="era">
+                <strong>1960年代</strong>
+                <p>填海工程開展，漁業逐漸式微</p>
+            </div>
+            
+            <div class="era">
+                <strong>1980年代</strong> 
+                <p>市區迅速發展，社區功能轉型</p>
+            </div>
+            
+            <div class="era">
+                <strong>現在</strong>
+                <p>三級歷史建築，繼續服務社區</p>
+            </div>
+        </div>
+        
+        <div style="background: #ffeaa7; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #2d3436;"><i class="fas fa-tasks"></i> 最終探索任務</h3>
+            <ul style="margin: 15px 0; padding-left: 20px; color: #2d3436;">
+                <li>觀察廟宇建築特色和歷史痕跡</li>
+                <li>了解觀音信仰在漁民社區的角色</li>
+                <li>思考傳統信仰在現代社會的意義</li>
+                <li>記錄廟宇與周邊環境的關係</li>
+            </ul>
+        </div>
+        
+        <div style="background: #74b9ff; color: white; padding: 15px; border-radius: 10px; margin: 20px 0;">
+            <h4><i class="fas fa-star"></i> 特別提示</h4>
+            <p>這是您的最後一站！完成後您將獲得完整的九龍記憶庫探索證書，成為真正的歷史探索者。</p>
+        </div>
+        
+        <button onclick="goBackToGame()">
+            <i class="fas fa-flag-checkered"></i> 完成最終探索
+        </button>
+    </div>
+
+    <script>
+        function goBackToGame() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const team = urlParams.get('team');
+            if (team) {
+                window.location.href = `index.html?team=${team}`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // 頁面訪問追蹤
+        window.onload = function() {
+            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+            analyticsData.push({
+                timestamp: new Date().toISOString(),
+                event: 'mission_page_view',
+                page: 'mission5',
+                team: new URLSearchParams(window.location.search).get('team')
+            });
+            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+        };
+    </script>
+</body>
+</html>
