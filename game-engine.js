@@ -1,45 +1,43 @@
 // =============================================
-// 九龍記憶庫 - 遊戲引擎
-// 完整的任務系統、AR觸發、密碼驗證
+// 九龍記憶庫 - 完整遊戲引擎 (8個關卡)
+// 4-6小時沉浸式體驗
 // =============================================
 
-// 🎯 遊戲數據配置
-const GAME_CONFIG = {
-    currentMission: 0,
-    userProgress: {},
-    missionRequirements: {}
-};
-
-// 🗺️ 完整的任務數據
 const GAME_DATA = {
     missions: [
         {
             id: 1,
             location: "海心公園鯨魚石",
             title: "🐋 消失的碼頭記憶",
-            description: "您現在位於土瓜灣海心公園，這裡曾經是繁忙的海岸線。1960年代填海前，這裡是漁船停泊的碼頭。",
-            task: "拍攝鯨魚石與現代建築的對比照片，了解填海歷史",
+            description: "您現在位於土瓜灣海心公園，這裡曾經是繁忙的海岸線。1960年代填海前，這裡是漁船停泊的碼頭，見證了香港從漁港到現代城市的轉變。",
+            task: "拍攝鯨魚石與現代建築的對比照片，了解填海歷史對社區的影響",
+            estimatedTime: "45分鐘",
             
-            // AR配置
             arConfig: {
                 triggerObject: "鯨魚石",
                 videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-seashore-with-rocks-1095-large.mp4",
-                scanTime: 5, // 模擬掃描時間(秒)
-                correctPassword: "填海工程"
+                scanTime: 8,
+                correctPassword: "填海工程",
+                arEffect: "海岸線重現"
             },
             
-            // 任務要求
             requirements: {
                 watchVideo: false,
                 correctAnswer: false,
                 collectedItem: false
             },
             
-            // 收集物品
             collectible: {
                 name: "老漁民日記",
-                description: "記錄了1960年代海邊生活的珍貴文獻",
-                image: "📖"
+                description: "1962年漁民記錄的出海日誌，描述當時海邊生活",
+                image: "📖",
+                story: "『每日清晨四時出海，黃昏歸來，海心島一帶魚獲最豐富...』"
+            },
+            
+            historicalContext: {
+                period: "1960年代",
+                significance: "土瓜灣填海工程的起點",
+                impact: "海岸線向北推移500米，漁村消失"
             },
             
             nextMission: "mission2.html",
@@ -49,14 +47,16 @@ const GAME_DATA = {
             id: 2,
             location: "土瓜灣十三街",
             title: "🏘️ 戰後唐樓群",
-            description: "漫步土瓜灣十三街，這些1950-60年代建成的唐樓，見證了戰後香港的住屋發展和人口急增。",
-            task: "觀察唐樓建築特色，了解戰後移民歷史",
+            description: "漫步土瓜灣十三街，這些1950-60年代建成的唐樓，見證了戰後香港的住屋發展和內地移民潮。每棟唐樓都承載着不同家庭的故事。",
+            task: "觀察唐樓的騎樓設計，了解戰後建築特色與社區形成",
+            estimatedTime: "50分鐘",
             
             arConfig: {
                 triggerObject: "唐樓騎樓",
                 videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-vintage-building-facade-1129-large.mp4",
-                scanTime: 6,
-                correctPassword: "戰後重建"
+                scanTime: 7,
+                correctPassword: "戰後重建",
+                arEffect: "1950年代街景重現"
             },
             
             requirements: {
@@ -67,8 +67,15 @@ const GAME_DATA = {
             
             collectible: {
                 name: "建築藍圖",
-                description: "1950年代唐樓的原始設計圖",
-                image: "📐"
+                description: "1958年唐樓原始設計圖，展現戰後建築風格",
+                image: "📐",
+                story: "設計師在藍圖旁註明：『為新移民提供安身之所』"
+            },
+            
+            historicalContext: {
+                period: "1950-1960年代", 
+                significance: "戰後移民住屋解決方案",
+                impact: "形成緊密社區網絡，商住混合模式"
             },
             
             nextMission: "mission3.html",
@@ -77,15 +84,55 @@ const GAME_DATA = {
         {
             id: 3,
             location: "九龍寨城公園",
-            title: "🏯 三不管地帶的記憶", 
-            description: "這裡曾經是著名的九龍寨城 - 世界上人口最密集的地方。1994年清拆後改建為公園。",
-            task: "尋找歷史遺跡，了解寨城的獨特社區生態",
+            title: "🏯 三不管地帶的記憶",
+            description: "這裡曾經是傳奇的九龍寨城 - 世界上人口最密集的地方。在0.026平方公里土地上居住近5萬人，形成獨特的社區生態系統。",
+            task: "尋找清朝衙門遺址，了解寨城從軍事駐地到獨特社區的演變",
+            estimatedTime: "60分鐘",
             
             arConfig: {
                 triggerObject: "衙門遺址",
                 videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-old-city-street-with-buildings-1127-large.mp4",
-                scanTime: 7,
-                correctPassword: "九龍寨城"
+                scanTime: 10,
+                correctPassword: "九龍寨城",
+                arEffect: "寨城巷道重現"
+            },
+            
+            requirements: {
+                watchVideo: false,
+                correctAnswer: false,
+                collectedItem: false
+            },
+            
+            collectible: {
+                name: "寨城照片",
+                description: "1993年清拆前最後的照片，記錄獨特社區生活",
+                image: "📷", 
+                story: "照片背面寫着：『最後的牙醫診所，服務社區三十年』"
+            },
+            
+            historicalContext: {
+                period: "1947-1994年",
+                significance: "獨特的三不管地帶社區",
+                impact: "1994年清拆，1995年改建公園"
+            },
+            
+            nextMission: "mission4.html",
+            coordinates: "22.3320° N, 114.1895° E"
+        },
+        {
+            id: 4,
+            location: "九龍城泰國社區",
+            title: "🍜 小泰國的誕生",
+            description: "九龍城是香港泰國社區的中心，這裡的發展與啟德機場歷史緊密相連。從泰籍空勤人員聚居地發展成文化美食地標。",
+            task: "探索泰式商店，了解文化融合與社區多元性",
+            estimatedTime: "55分鐘",
+            
+            arConfig: {
+                triggerObject: "泰式餐廳招牌",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-night-market-with-food-stalls-1088-large.mp4",
+                scanTime: 6,
+                correctPassword: "啟德機場",
+                arEffect: "1970年代街市重現"
             },
             
             requirements: {
@@ -95,409 +142,252 @@ const GAME_DATA = {
             },
             
             collectible: {
-                name: "寨城照片",
-                description: "1993年清拆前的珍貴照片",
-                image: "📷"
+                name: "泰式食譜",
+                description: "第一代泰國移民的傳統食譜手稿",
+                image: "📜",
+                story: "食譜邊緣註明：『用香港食材做出家鄉味道』"
             },
             
-            nextMission: "mission4.html",
-            coordinates: "22.3320° N, 114.1895° E"
+            historicalContext: {
+                period: "1970年代至今",
+                significance: "國際化社區形成的典範", 
+                impact: "文化多元共融，美食地標"
+            },
+            
+            nextMission: "mission5.html",
+            coordinates: "22.3302° N, 114.1913° E"
+        },
+        {
+            id: 5,
+            location: "紅磡觀音廟",
+            title: "🙏 漁民信仰中心",
+            description: "紅磡觀音廟建於清朝同治年間，見證了紅磡從漁港到現代市區的完整轉變。這裡曾是漁民出海前祈福的重要場所。",
+            task: "了解觀音廟建築特色，思考信仰在社區變遷中的角色",
+            estimatedTime: "40分鐘",
+            
+            arConfig: {
+                triggerObject: "觀音廟正門",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-historical-temple-entrance-1131-large.mp4",
+                scanTime: 5,
+                correctPassword: "清朝同治",
+                arEffect: "清代漁港重現"
+            },
+            
+            requirements: {
+                watchVideo: false,
+                correctAnswer: false,
+                collectedItem: false
+            },
+            
+            collectible: {
+                name: "祈福木牌",
+                description: "1950年代漁民留下的祈福木牌",
+                image: "🪵",
+                story: "木牌上刻着：『風調雨順，滿載而歸』"
+            },
+            
+            historicalContext: {
+                period: "清朝至今",
+                significance: "漁民信仰與社區凝聚象徵",
+                impact: "從漁港信仰中心到市區文化遺產"
+            },
+            
+            nextMission: "mission6.html", 
+            coordinates: "22.3095° N, 114.1895° E"
+        },
+        {
+            id: 6,
+            location: "土瓜灣牛棚藝術村",
+            title: "🎨 工業遺產再生",
+            description: "前身為1908年建成的牛隻檢疫站，見證香港屠宰業歷史。現在轉型為藝術村，展現工業遺產的創意重生。",
+            task: "探索紅磚建築，了解工業遺址的文化轉型",
+            estimatedTime: "50分鐘",
+            
+            arConfig: {
+                triggerObject: "紅磚拱門",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-architectural-details-of-a-historical-building-1130-large.mp4",
+                scanTime: 7,
+                correctPassword: "牛隻檢疫",
+                arEffect: "1908年牛棚運作重現"
+            },
+            
+            requirements: {
+                watchVideo: false,
+                correctAnswer: false,
+                collectedItem: false
+            },
+            
+            collectible: {
+                name: "建築磚塊",
+                description: "1908年原始紅磚，刻有當時標記",
+                image: "🧱",
+                story: "磚塊側面印着『香港政府 1908』字樣"
+            },
+            
+            historicalContext: {
+                period: "1908年至今",
+                significance: "香港早期現代化設施遺址",
+                impact: "工業遺產創意再利用典範"
+            },
+            
+            nextMission: "mission7.html",
+            coordinates: "22.3190° N, 114.1898° E"
+        },
+        {
+            id: 7, 
+            location: "九龍城碼頭",
+            title: "⛵ 渡輪時代記憶",
+            description: "曾經是連接九龍城與港島的重要渡輪碼頭，見證了海上交通的繁華時代。隨著隧道通車，渡輪服務逐漸式微。",
+            task: "尋找碼頭遺跡，了解海上交通對社區發展的影響",
+            estimatedTime: "45分鐘",
+            
+            arConfig: {
+                triggerObject: "碼頭石壆",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-ferry-approaching-the-pier-1132-large.mp4",
+                scanTime: 8,
+                correctPassword: "渡輪服務",
+                arEffect: "1960年代碼頭繁忙景象"
+            },
+            
+            requirements: {
+                watchVideo: false,
+                correctAnswer: false,
+                collectedItem: false
+            },
+            
+            collectible: {
+                name: "船票存根",
+                description: "1975年九龍城至北角渡輪船票",
+                image: "🎫",
+                story: "票根背面寫着：『最後一班渡輪，1984.6.30』"
+            },
+            
+            historicalContext: {
+                period: "1950-1980年代",
+                significance: "維港两岸重要交通樞紐",
+                impact: "海底隧道通車導致渡輪式微"
+            },
+            
+            nextMission: "mission8.html",
+            coordinates: "22.3250° N, 114.1910° E"
+        },
+        {
+            id: 8,
+            location: "九龍城廣場",
+            title: "🏬 社區商業演變",
+            description: "從傳統街市到現代商場，見證九龍城區商業模式的轉變。這裡融合了老字號與新商鋪，展現社區的延續與創新。",
+            task: "對比新舊商業模式，思考社區經濟的發展軌跡",
+            estimatedTime: "55分鐘",
+            
+            arConfig: {
+                triggerObject: "商場中庭",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-modern-shopping-mall-interior-1133-large.mp4", 
+                scanTime: 6,
+                correctPassword: "商業轉型",
+                arEffect: "1980年代街市重現"
+            },
+            
+            requirements: {
+                watchVideo: false,
+                correctAnswer: false,
+                collectedItem: false
+            },
+            
+            collectible: {
+                name: "商場藍圖",
+                description: "1990年代商場規劃設計圖",
+                image: "🏢",
+                story: "設計師註解：『保留社區記憶，創造現代空間』"
+            },
+            
+            historicalContext: {
+                period: "1990年代至今",
+                significance: "社區商業現代化轉型代表",
+                impact: "新舊融合的社區商業模式"
+            },
+            
+            nextMission: "complete.html",
+            coordinates: "22.3325° N, 114.1920° E"
         }
     ]
 };
 
-// 🎮 遊戲狀態管理
-let gameState = {
-    currentMissionIndex: 0,
-    completedMissions: [],
-    collectedItems: [],
-    userStats: {
-        startTime: null,
-        totalPlayTime: 0,
-        correctAnswers: 0
-    }
+// 🔑 所有關卡密碼列表 (測試用)
+const MISSION_PASSWORDS = {
+    1: "填海工程",
+    2: "戰後重建", 
+    3: "九龍寨城",
+    4: "啟德機場",
+    5: "清朝同治",
+    6: "牛隻檢疫",
+    7: "渡輪服務",
+    8: "商業轉型"
 };
 
-// 🚀 初始化遊戲進度
-function loadGameProgress() {
-    const savedProgress = localStorage.getItem('kowloonGameProgress');
-    const currentUser = localStorage.getItem('currentUser');
+// 🎯 AR測試配置
+const AR_TEST_CONFIG = {
+    // 測試模式 - 可切換真實AR或模擬模式
+    testMode: true,
     
-    if (savedProgress && currentUser) {
-        const userData = JSON.parse(currentUser);
-        const allProgress = JSON.parse(savedProgress);
-        
-        // 加載該用戶的進度
-        if (allProgress[userData.username]) {
-            gameState = allProgress[userData.username];
-            GAME_CONFIG.currentMission = gameState.currentMissionIndex;
+    // AR效果類型
+    effects: {
+        "海岸線重現": {
+            description: "重現1960年代海岸線景象",
+            testMethod: "點擊AR按鈕後等待8秒掃描"
+        },
+        "1950年代街景重現": {
+            description: "顯示戰後時期的街道景象", 
+            testMethod: "掃描唐樓騎樓結構"
+        },
+        "寨城巷道重現": {
+            description: "重現密集建築中的狹窄巷道",
+            testMethod: "在衙門遺址位置觸發"
+        },
+        "1970年代街市重現": {
+            description: "顯示早期泰國社區街市",
+            testMethod: "掃描泰文招牌元素"
         }
-    } else {
-        // 新遊戲
-        gameState.userStats.startTime = new Date();
-        GAME_CONFIG.currentMission = 0;
-    }
+    },
     
-    loadCurrentMission();
-}
-
-// 📍 加載當前任務
-function loadCurrentMission() {
-    const mission = GAME_DATA.missions[GAME_CONFIG.currentMission];
-    if (!mission) {
-        completeGame();
-        return;
-    }
-    
-    // 更新界面
-    document.getElementById('missionTitle').textContent = mission.title;
-    document.getElementById('missionDescription').textContent = mission.description;
-    document.getElementById('missionProgress').textContent = `第 ${GAME_CONFIG.currentMission + 1} 關 / 共 ${GAME_DATA.missions.length} 關`;
-    document.getElementById('taskDescription').textContent = mission.task;
-    document.getElementById('nextMissionName').textContent = GAME_DATA.missions[GAME_CONFIG.currentMission + 1]?.location || '完成';
-    
-    // 重置任務要求
-    resetMissionRequirements();
-    
-    // 更新AR區域
-    updateARSection(mission);
-    
-    // 更新庫存顯示
-    updateInventory();
-    
-    // 隱藏QR碼區域
-    document.getElementById('qrSection').style.display = 'none';
-    
-    // 禁用完成按鈕
-    document.getElementById('completeButton').disabled = true;
-    document.getElementById('completionHint').style.display = 'block';
-}
-
-// 🎬 更新AR區域
-function updateARSection(mission) {
-    const arTriggerArea = document.getElementById('arTriggerArea');
-    const arVideoContainer = document.getElementById('arVideoContainer');
-    
-    arTriggerArea.innerHTML = `
-        <h4>🔍 掃描目標：${mission.arConfig.triggerObject}</h4>
-        <p>將相機對準${mission.arConfig.triggerObject}，保持穩定${mission.arConfig.scanTime}秒</p>
-        <button onclick="startARScan(${GAME_CONFIG.currentMission})" class="action-button">
-            <i class="fas fa-camera"></i> 啟動AR掃描
-        </button>
-        <div id="scanProgress" style="margin-top: 1rem; display: none;">
-            <div style="background: #374151; height: 4px; border-radius: 2px; overflow: hidden;">
-                <div id="scanProgressBar" style="background: var(--accent); height: 100%; width: 0%; transition: width 0.1s;"></div>
-            </div>
-            <p style="margin-top: 0.5rem; color: #93c5fd;">
-                <i class="fas fa-sync fa-spin"></i> 掃描中... <span id="scanTime">${mission.arConfig.scanTime}</span>秒
-            </p>
-        </div>
-    `;
-    
-    arVideoContainer.style.display = 'none';
-}
-
-// 📹 啟動AR掃描
-function startARScan(missionIndex) {
-    const mission = GAME_DATA.missions[missionIndex];
-    const scanProgress = document.getElementById('scanProgress');
-    const scanProgressBar = document.getElementById('scanProgressBar');
-    const scanTimeElement = document.getElementById('scanTime');
-    
-    // 顯示掃描進度
-    scanProgress.style.display = 'block';
-    
-    let timeLeft = mission.arConfig.scanTime;
-    const scanInterval = setInterval(() => {
-        timeLeft--;
-        scanTimeElement.textContent = timeLeft;
+    // 模擬AR觸發方法
+    simulateAR: function(missionId) {
+        const mission = GAME_DATA.missions[missionId];
+        console.log(`🎬 模擬AR觸發: ${mission.arConfig.arEffect}`);
         
-        const progress = ((mission.arConfig.scanTime - timeLeft) / mission.arConfig.scanTime) * 100;
-        scanProgressBar.style.width = progress + '%';
-        
-        if (timeLeft <= 0) {
-            clearInterval(scanInterval);
-            onARScanComplete(missionIndex);
+        // 顯示模擬AR效果
+        const arContainer = document.getElementById('arVideoContainer');
+        if (arContainer) {
+            arContainer.innerHTML = `
+                <div style="background: #000; color: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <h4>🧪 AR測試模式</h4>
+                    <p>效果: <strong>${mission.arConfig.arEffect}</strong></p>
+                    <p>${mission.arConfig.triggerObject} 識別成功！</p>
+                    <div style="background: #1f2937; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p>🎥 正在播放歷史影片...</p>
+                        <video controls style="width: 100%; max-width: 300px; border-radius: 5px;">
+                            <source src="${mission.arConfig.videoUrl}" type="video/mp4">
+                        </video>
+                    </div>
+                    <button onclick="AR_TEST_CONFIG.completeARTest(${missionId})" 
+                            style="background: var(--accent); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer;">
+                        完成AR體驗
+                    </button>
+                </div>
+            `;
+            
+            // 自動播放影片
+            const video = arContainer.querySelector('video');
+            video.play().catch(e => console.log('影片自動播放被阻止，需要手動播放'));
         }
-    }, 1000);
-}
-
-// ✅ AR掃描完成
-function onARScanComplete(missionIndex) {
-    const mission = GAME_DATA.missions[missionIndex];
-    const arTriggerArea = document.getElementById('arTriggerArea');
-    const arVideoContainer = document.getElementById('arVideoContainer');
-    const videoElement = document.getElementById('historyVideo');
+    },
     
-    // 隱藏掃描區域，顯示影片
-    arTriggerArea.style.display = 'none';
-    arVideoContainer.style.display = 'block';
-    
-    // 設置影片源
-    videoElement.src = mission.arConfig.videoUrl;
-    
-    // 開始播放影片
-    videoElement.play().then(() => {
-        console.log('🎬 開始播放歷史影片');
-    }).catch(error => {
-        console.log('❌ 影片播放失敗:', error);
-        // 模擬影片播放完成
-        setTimeout(onVideoComplete, 3000);
-    });
-    
-    // 監聽影片結束
-    videoElement.onended = onVideoComplete;
-    
-    function onVideoComplete() {
-        // 標記影片觀看完成
+    completeARTest: function(missionId) {
+        const mission = GAME_DATA.missions[missionId];
         mission.requirements.watchVideo = true;
-        
-        // 解鎖收集物品
         mission.requirements.collectedItem = true;
+        
+        // 添加收集物品
         addCollectibleItem(mission.collectible);
         
-        // 顯示提示
-        arVideoContainer.innerHTML += `
-            <div style="background: var(--success); color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                <h5><i class="fas fa-check"></i> AR探索完成！</h5>
-                <p>已獲得物品：<strong>${mission.collectible.name}</strong></p>
-                <p>現在請回答歷史問題來完成任務</p>
-            </div>
-        `;
-        
-        checkMissionCompletion();
-    }
-}
-
-// 🔑 檢查密碼答案
-function checkPassword() {
-    const mission = GAME_DATA.missions[GAME_CONFIG.currentMission];
-    const passwordInput = document.getElementById('missionPassword');
-    const userAnswer = passwordInput.value.trim();
-    
-    if (userAnswer === mission.arConfig.correctPassword) {
-        // 答案正確
-        mission.requirements.correctAnswer = true;
-        
-        // 顯示成功訊息
-        const passwordSection = document.querySelector('.password-input');
-        passwordSection.innerHTML = `
-            <div style="background: var(--success); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                <h5><i class="fas fa-check-circle"></i> 答案正確！</h5>
-                <p>您已成功解開歷史之謎</p>
-            </div>
-        `;
-        
-        gameState.userStats.correctAnswers++;
-        checkMissionCompletion();
-        
-    } else {
-        // 答案錯誤
-        alert('❌ 答案不正確！請仔細觀看AR影片中的線索。');
-        passwordInput.value = '';
-        passwordInput.focus();
-    }
-}
-
-// ✅ 檢查任務完成狀態
-function checkMissionCompletion() {
-    const mission = GAME_DATA.missions[GAME_CONFIG.currentMission];
-    const completeButton = document.getElementById('completeButton');
-    const completionHint = document.getElementById('completionHint');
-    
-    const allCompleted = Object.values(mission.requirements).every(req => req === true);
-    
-    if (allCompleted) {
-        completeButton.disabled = false;
-        completionHint.innerHTML = '<span style="color: var(--success);">✅ 所有任務要求已完成！現在可以完成任務。</span>';
-    } else {
-        const missingRequirements = [];
-        if (!mission.requirements.watchVideo) missingRequirements.push('觀看AR影片');
-        if (!mission.requirements.correctAnswer) missingRequirements.push('回答歷史問題');
-        if (!mission.requirements.collectedItem) missingRequirements.push('收集物品');
-        
-        completionHint.innerHTML = `⚠️ 仍需完成: ${missingRequirements.join(', ')}`;
-    }
-}
-
-// 🏁 完成當前任務
-function completeMission() {
-    const mission = GAME_DATA.missions[GAME_CONFIG.currentMission];
-    
-    // 添加到完成列表
-    gameState.completedMissions.push(mission.id);
-    gameState.currentMissionIndex = GAME_CONFIG.currentMission + 1;
-    
-    // 顯示完成動畫
-    showCompletionAnimation();
-    
-    // 生成QR碼
-    generateQRCode(mission.nextMission);
-    
-    // 顯示QR碼區域
-    setTimeout(() => {
-        document.getElementById('qrSection').style.display = 'block';
-        saveGameProgress();
-    }, 2000);
-}
-
-// 🎉 顯示完成動畫
-function showCompletionAnimation() {
-    const completionDiv = document.createElement('div');
-    completionDiv.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `;
-    
-    completionDiv.innerHTML = `
-        <div style="background: white; padding: 3rem; border-radius: 20px; text-align: center; animation: popIn 0.5s ease-out;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
-            <h2 style="color: var(--success); margin-bottom: 1rem;">任務完成！</h2>
-            <p>恭喜您解鎖了 ${GAME_DATA.missions[GAME_CONFIG.currentMission].location} 的歷史秘密</p>
-            <div style="margin-top: 2rem; font-size: 0.9rem; color: #6b7280;">
-                獲得物品: ${GAME_DATA.missions[GAME_CONFIG.currentMission].collectible.name}
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(completionDiv);
-    
-    setTimeout(() => {
-        completionDiv.remove();
-    }, 3000);
-}
-
-// 🔄 加載下一關
-function loadNextMission() {
-    GAME_CONFIG.currentMission++;
-    
-    if (GAME_CONFIG.currentMission >= GAME_DATA.missions.length) {
-        completeGame();
-    } else {
-        loadCurrentMission();
-        
-        // 滾動到頂部
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-}
-
-// 🏆 完成整個遊戲
-function completeGame() {
-    const gameContent = document.querySelector('.game-container');
-    gameContent.innerHTML = `
-        <div style="text-align: center; padding: 4rem 2rem;">
-            <div style="background: linear-gradient(135deg, #ffd700, #ffed4e); 
-                        padding: 3rem; border-radius: 20px; border: 5px solid #f59e0b; 
-                        margin-bottom: 2rem;">
-                <h1 style="color: #2d3436; margin-bottom: 1rem;">🏆 探索完成！</h1>
-                <h2 style="color: #2d3436;">九龍記憶庫大師探索者</h2>
-            </div>
-            
-            <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
-                <h3>探索成就總結</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem;">${gameState.completedMissions.length}</div>
-                        <div>完成關卡</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem;">${gameState.collectedItems.length}</div>
-                        <div>收集物品</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem;">${gameState.userStats.correctAnswers}</div>
-                        <div>正確答案</div>
-                    </div>
-                </div>
-            </div>
-            
-            <button onclick="restartGame()" class="action-button">
-                <i class="fas fa-redo"></i> 重新開始遊戲
-            </button>
-        </div>
-    `;
-}
-
-// 📦 添加收集物品
-function addCollectibleItem(item) {
-    if (!gameState.collectedItems.shenzhen(collected => collected.name === item.name)) {
-        gameState.collectedItems.push(item);
-        updateInventory();
-    }
-}
-
-// 🎒 更新庫存顯示
-function updateInventory() {
-    const inventoryItems = document.getElementById('inventoryItems');
-    inventoryItems.innerHTML = '';
-    
-    gameState.collectedItems.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'inventory-item';
-        itemElement.innerHTML = `
-            <div style="font-size: 2rem; margin-bottom: 0.5rem;">${item.image}</div>
-            <div style="font-weight: bold; font-size: 0.9rem;">${item.name}</div>
-        `;
-        itemElement.title = item.description;
-        inventoryItems.appendChild(itemElement);
-    });
-}
-
-// 🔄 重置任務要求
-function resetMissionRequirements() {
-    const mission = GAME_DATA.missions[GAME_CONFIG.currentMission];
-    if (mission) {
-        mission.requirements = {
-            watchVideo: false,
-            correctAnswer: false,
-            collectedItem: false
-        };
-    }
-}
-
-// 💾 保存遊戲進度
-function saveGameProgress() {
-    const currentUser = localStorage.getItem('currentUser');
-    if (!currentUser) return;
-    
-    const userData = JSON.parse(currentUser);
-    let allProgress = JSON.parse(localStorage.getItem('kowloonGameProgress') || '{}');
-    
-    allProgress[userData.username] = gameState;
-    localStorage.setItem('kowloonGameProgress', JSON.stringify(allProgress));
-}
-
-// 🔄 重新開始遊戲
-function restartGame() {
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-        const userData = JSON.parse(currentUser);
-        let allProgress = JSON.parse(localStorage.getItem('kowloonGameProgress') || '{}');
-        delete allProgress[userData.username];
-        localStorage.setItem('kowloonGameProgress', JSON.stringify(allProgress));
-    }
-    
-    localStorage.removeItem('currentUser');
-    window.location.href = 'index.html';
-}
-
-// 📱 生成QR碼
-function generateQRCode(url) {
-    const qrContainer = document.getElementById('qrCode');
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-    
-    qrContainer.innerHTML = `
-        <img src="${qrUrl}" 
-             alt="QR Code" 
-             style="width: 100%; height: 100%; border-radius: 5px;"
-             onerror="this.onerror=null; this.src='https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(url)}&choe=UTF-8'">
-    `;
-}
+        // 更新界面
+        updateARC
