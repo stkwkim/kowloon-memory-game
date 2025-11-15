@@ -1,3 +1,43 @@
+// 增強版分析記錄
+function recordAnalyticsEvent(eventName, eventData) {
+  const userData = JSON.parse(localStorage.getItem('kowloon_user_data') || '{}');
+  
+  const analyticsEvent = {
+    timestamp: new Date().toISOString(),
+    event: eventName,
+    data: eventData,
+    user: userData.userEmail || 'unknown',
+    session_id: getSessionId(),
+    user_agent: navigator.userAgent
+  };
+  
+  // 保存到本地存儲
+  const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+  analyticsData.push(analyticsEvent);
+  localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+  
+  // 如果數據量達到10條，立即提交
+  if (analyticsData.length >= 10) {
+    submitBatchAnalytics();
+  }
+  
+  console.log('📝 記錄分析事件:', eventName, eventData);
+}
+
+// 生成會話ID
+function getSessionId() {
+  let sessionId = localStorage.getItem('kowloon_session_id');
+  if (!sessionId) {
+    sessionId = 'SESS_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('kowloon_session_id', sessionId);
+  }
+  return sessionId;
+}
+
+// 頁面卸載時提交剩余數據
+window.addEventListener('beforeunload', function() {
+  submitBatchAnalytics();
+});
 // 申請義工 - 更新版本
 async function applyVolunteer(role) {
   const userData = JSON.parse(localStorage.getItem('kowloon_user_data'));
@@ -721,5 +761,6 @@ window.onload = function() {
         timestamp: new Date().toISOString()
     });
 };
+
 
 
