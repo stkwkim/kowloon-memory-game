@@ -1,4 +1,141 @@
 // 遊戲數據 - 強化歷史內容和付費功能
+// =============================================
+// 🌐 API通信函數
+// =============================================
+
+// API配置 - 請替換為您的實際URL
+const API_CONFIG = {
+  BASE_URL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
+  TIMEOUT: 10000 // 10秒超時
+};
+
+/**
+ * 提交預約到Google Apps Script
+ */
+async function submitBookingToAPI(bookingData) {
+  console.log('📤 提交預約數據:', bookingData);
+  
+  try {
+    showLoading('提交預約中...');
+    
+    const response = await fetch(API_CONFIG.BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookingData)
+    });
+    
+    const result = await response.json();
+    console.log('📥 API響應:', result);
+    
+    hideLoading();
+    
+    if (result.success) {
+      // 保存確認碼到本地存儲
+      localStorage.setItem('lastConfirmationCode', result.confirmationCode);
+      localStorage.setItem('lastBookingEmail', bookingData.email);
+      
+      showSuccess(`預約成功！確認碼已發送至: ${bookingData.email}`);
+      return result;
+    } else {
+      showError(`預約失敗: ${result.error}`);
+      return null;
+    }
+    
+  } catch (error) {
+    console.error('❌ API調用失敗:', error);
+    hideLoading();
+    showError('網絡錯誤，請檢查網絡連接後重試');
+    return null;
+  }
+}
+
+/**
+ * 提交分析數據
+ */
+async function submitAnalyticsData(analyticsData) {
+  try {
+    // 使用setTimeout避免阻塞主線程
+    setTimeout(async () => {
+      try {
+        const response = await fetch(API_CONFIG.BASE_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'analytics',
+            data: analyticsData
+          })
+        });
+        
+        const result = await response.json();
+        console.log('📊 分析數據提交結果:', result);
+      } catch (error) {
+        console.error('分析數據提交失敗:', error);
+      }
+    }, 0);
+    
+  } catch (error) {
+    console.error('分析數據處理錯誤:', error);
+  }
+}
+
+/**
+ * 提交義工申請
+ */
+async function submitVolunteerApplication(applicationData) {
+  try {
+    showLoading('提交義工申請中...');
+    
+    const response = await fetch(API_CONFIG.BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'volunteer',
+        data: applicationData
+      })
+    });
+    
+    const result = await response.json();
+    console.log('🤝 義工申請響應:', result);
+    
+    hideLoading();
+    
+    if (result.success) {
+      showSuccess('義工申請提交成功！我們將在3個工作日內聯絡您。');
+      return result;
+    } else {
+      showError(`申請失敗: ${result.error}`);
+      return null;
+    }
+    
+  } catch (error) {
+    console.error('❌ 義工申請提交失敗:', error);
+    hideLoading();
+    showError('網絡錯誤，請稍後重試');
+    return null;
+  }
+}
+
+/**
+ * 批量提交分析數據
+ */
+function submitBatchAnalytics() {
+  const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+  
+  if (analyticsData.length > 0) {
+    console.log(`📦 提交批量分析數據: ${analyticsData.length} 條`);
+    
+    submitAnalyticsData(analyticsData).then(() => {
+      // 提交成功後清空本地存儲
+      localStorage.removeItem('kowloon_analytics');
+    });
+  }
+}
 const gameData = {
     missions: [
         {
@@ -552,3 +689,4 @@ window.onload = function() {
         timestamp: new Date().toISOString()
     });
 };
+
