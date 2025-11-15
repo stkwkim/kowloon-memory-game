@@ -1,3 +1,35 @@
+// 申請義工 - 更新版本
+async function applyVolunteer(role) {
+  const userData = JSON.parse(localStorage.getItem('kowloon_user_data'));
+  
+  if (!userData) {
+    showError('請先完成遊戲註冊');
+    return;
+  }
+  
+  const applicationData = {
+    name: userData.teamName,
+    email: userData.userEmail,
+    phone: userData.phone || '未提供',
+    position: role,
+    experience: '通過九龍記憶庫遊戲了解歷史',
+    availability: '待確認'
+  };
+  
+  const result = await submitVolunteerApplication(applicationData);
+  
+  if (result && result.success) {
+    // 更新本地用戶數據
+    userData.userConsents.volunteerApplied = true;
+    localStorage.setItem('kowloon_user_data', JSON.stringify(userData));
+    
+    // 記錄分析數據
+    recordAnalyticsEvent('volunteer_application_submitted', {
+      role: role,
+      application_id: result.applicationId
+    });
+  }
+}
 // 遊戲數據 - 強化歷史內容和付費功能
 // =============================================
 // 🌐 API通信函數
@@ -689,4 +721,5 @@ window.onload = function() {
         timestamp: new Date().toISOString()
     });
 };
+
 
