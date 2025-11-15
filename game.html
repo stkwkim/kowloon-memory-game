@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九龍記憶庫 - 遊戲主頁面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1f2937;
+            --light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .mission-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .mission-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-progress {
+            background: #e5e7eb;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .ar-section {
+            background: #000;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .task-section {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .password-input {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .password-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 0.5rem;
+        }
+        
+        .qr-section {
+            text-align: center;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: none;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            border: 3px dashed var(--accent);
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0.5rem;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .action-button.secondary {
+            background: #6b7280;
+        }
+        
+        .action-button.success {
+            background: var(--success);
+        }
+        
+        .inventory {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .inventory-items {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .inventory-item {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e0f2fe;
+            text-align: center;
+            min-width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-landmark"></i>
+            九龍記憶庫
+        </div>
+        <div class="user-info">
+            <span id="userWelcome">歡迎，探索者！</span>
+            <button onclick="logout()" class="action-button secondary" style="padding: 0.5rem 1rem;">
+                <i class="fas fa-sign-out-alt"></i> 登出
+            </button>
+        </div>
+    </nav>
+
+    <!-- 遊戲內容 -->
+    <div class="game-container">
+        <!-- 當前任務 -->
+        <div class="mission-card">
+            <div class="mission-header">
+                <h1 id="missionTitle">🐋 海心公園鯨魚石</h1>
+                <div class="mission-progress" id="missionProgress">第 1 關 / 共 5 關</div>
+            </div>
+            
+            <p id="missionDescription">您現在位於土瓜灣海心公園，這裡曾經是繁忙的海岸線。1960年代填海前，這裡是漁船停泊的碼頭。</p>
+            
+            <!-- AR區域 -->
+            <div class="ar-section">
+                <h3><i class="fas fa-vr-cardboard"></i> AR歷史探索</h3>
+                <p>使用您的手機相機掃描環境，當識別到特定物件時會播放歷史影片</p>
+                
+                <div id="arTriggerArea" style="background: #1f2937; padding: 2rem; border-radius: 8px; margin: 1rem 0;">
+                    <h4>🔍 掃描目標：鯨魚石</h4>
+                    <p>將相機對準海心公園的鯨魚形巨石</p>
+                    <button onclick="startARScan()" class="action-button">
+                        <i class="fas fa-camera"></i> 啟動AR掃描
+                    </button>
+                </div>
+                
+                <div id="arVideoContainer" style="display: none;">
+                    <video id="historyVideo" controls style="width: 100%; max-width: 400px; border-radius: 8px;">
+                        <source src="" type="video/mp4">
+                        您的瀏覽器不支持影片播放。
+                    </video>
+                    <p style="margin-top: 1rem; color: #93c5fd;">
+                        🎬 歷史影片播放中... 觀看完畢後繼續任務
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 任務要求 -->
+            <div class="task-section">
+                <h4>📝 任務要求</h4>
+                <p id="taskDescription">拍攝鯨魚石與現代建築的對比照片，並回答以下問題：</p>
+                
+                <div style="margin: 1.5rem 0;">
+                    <p><strong>問題：1960年代土瓜灣進行了什麼重大工程改變了海岸線？</strong></p>
+                    <div class="password-input">
+                        <input type="text" id="missionPassword" maxlength="8" placeholder="輸入答案密碼">
+                        <button onclick="checkPassword()" class="action-button">提交答案</button>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #6b7280; margin-top: 0.5rem;">
+                        💡 提示：答案在AR影片中尋找
+                    </p>
+                </div>
+                
+                <div id="taskRequirements" style="background: #fff3cd; padding: 1rem; border-radius: 8px;">
+                    <h5>✅ 完成條件：</h5>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>觀看完整的AR歷史影片</li>
+                        <li>正確回答歷史問題</li>
+                        <li>拍攝任務照片（可選）</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 完成任務按鈕 -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button onclick="completeMission()" class="action-button success" id="completeButton" disabled>
+                    <i class="fas fa-check"></i> 完成任務
+                </button>
+                <p id="completionHint" style="color: #ef4444; margin-top: 0.5rem;">
+                    ⚠️ 請先完成所有任務要求
+                </p>
+            </div>
+        </div>
+        
+        <!-- QR碼區域 (完成任務後顯示) -->
+        <div class="qr-section" id="qrSection">
+            <h3>🎉 任務完成！</h3>
+            <p>掃描以下QR碼獲取下一關的線索：</p>
+            <div class="qr-code" id="qrCode"></div>
+            <p style="color: #6b7280; margin-top: 1rem;">
+                下一關：<span id="nextMissionName">土瓜灣十三街</span>
+            </p>
+            <button onclick="loadNextMission()" class="action-button" style="margin-top: 1rem;">
+                <i class="fas fa-arrow-right"></i> 前往下一關
+            </button>
+        </div>
+        
+        <!-- 玩家庫存 -->
+        <div class="inventory">
+            <h3><i class="fas fa-backpack"></i> 收集物品</h3>
+            <div class="inventory-items" id="inventoryItems">
+                <!-- 收集的物品會在這裡顯示 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="game-engine.js"></script>
+    <script>
+        // 初始化遊戲
+        window.addEventListener('load', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            const userData = JSON.parse(currentUser);
+            document.getElementById('userWelcome').textContent = `歡迎，${userData.username}！`;
+            
+            // 加載遊戲進度
+            loadGameProgress();
+        });
+        
+        // 登出
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('gameProgress');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
