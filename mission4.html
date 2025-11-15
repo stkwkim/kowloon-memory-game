@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第四關 - 九龍城泰國社區 | 九龍記憶庫</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #c41e3a 0%, #dc143c 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .mission-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .culture-card {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="mission-container">
+        <div class="header">
+            <h1 style="color: #c41e3a;"><i class="fas fa-globe-asia"></i> 第四關解鎖</h1>
+            <p style="color: #666; margin-top: 10px;">九龍城泰國社區 - 小泰國的誕生</p>
+        </div>
+        
+        <div class="culture-card">
+            <h3><i class="fas fa-utensils"></i> 美食文化融合</h3>
+            <p>九龍城泰國社區的發展與香港航空業歷史緊密相連，形成獨特的多元文化景觀。</p>
+        </div>
+        
+        <div style="background: #ffeaa7; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #2d3436;"><i class="fas fa-plane"></i> 與航空業的淵源</h3>
+            <p>1970年代，啟德機場的泰籍空勤人員選擇在九龍城聚居，逐漸帶動泰國商店和餐廳的發展。</p>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <i class="fas fa-users" style="color: #c41e3a; font-size: 24px;"></i>
+                <p><strong>社區形成</strong><br>1970年代開始</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-store" style="color: #c41e3a; font-size: 24px;"></i>
+                <p><strong>商鋪數量</strong><br>50+ 泰國商店</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-utensils" style="color: #c41e3a; font-size: 24px;"></i>
+                <p><strong>餐廳特色</strong><br>地道泰國菜</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-gem" style="color: #c41e3a; font-size: 24px;"></i>
+                <p><strong>文化影響</strong><br>多元共融</p>
+            </div>
+        </div>
+        
+        <div style="background: #dfe6e9; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #2d3436;"><i class="fas fa-tasks"></i> 探索任務</h3>
+            <ul style="margin: 15px 0; padding-left: 20px; color: #2d3436;">
+                <li>尋找傳統泰國雜貨店和餐廳</li>
+                <li>觀察商店的泰文招牌和裝飾</li>
+                <li>了解泰式食材和調味料</li>
+                <li>思考文化融合對社區的影響</li>
+            </ul>
+        </div>
+        
+        <div style="background: #a29bfe; color: white; padding: 15px; border-radius: 10px; margin: 20px 0;">
+            <h4><i class="fas fa-lightbulb"></i> 文化體驗提示</h4>
+            <p>嘗試用泰文「สวัสดี」(sawasdee) 打招呼，參觀泰國佛教用品店，了解宗教信仰在文化傳承中的角色。</p>
+        </div>
+        
+        <button onclick="goBackToGame()">
+            <i class="fas fa-arrow-left"></i> 返回遊戲繼續探索
+        </button>
+    </div>
+
+    <script>
+        function goBackToGame() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const team = urlParams.get('team');
+            if (team) {
+                window.location.href = `index.html?team=${team}`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // 頁面訪問追蹤
+        window.onload = function() {
+            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
+            analyticsData.push({
+                timestamp: new Date().toISOString(),
+                event: 'mission_page_view', 
+                page: 'mission4',
+                team: new URLSearchParams(window.location.search).get('team')
+            });
+            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+        };
+    </script>
+</body>
+</html>
