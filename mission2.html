@@ -6,6 +6,13 @@
     <title>第二關 - 土瓜灣十三街 | 九龍記憶庫</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2563eb;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --light: #f8fafc;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +22,7 @@
         body {
             font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            color: white;
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
@@ -24,10 +31,11 @@
         .mission-container {
             max-width: 500px;
             margin: 40px auto;
-            background: white;
+            background: rgba(255,255,255,0.95);
+            color: #333;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         
         .header {
@@ -51,24 +59,6 @@
             border: 2px dashed #ffc107;
         }
         
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #00b894, #00a085);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: transform 0.3s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-        }
-        
         .historical-info {
             background: #e3f2fd;
             padding: 20px;
@@ -83,12 +73,39 @@
             border-radius: 8px;
             border-left: 4px solid #2196f3;
         }
+        
+        .ar-preview {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: transform 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
     <div class="mission-container">
         <div class="header">
-            <h1><i class="fas fa-building"></i> 第二關解鎖</h1>
+            <h1 style="color: #8B4513;"><i class="fas fa-building"></i> 第二關解鎖</h1>
             <p style="color: #666; margin-top: 10px;">土瓜灣十三街 - 戰後唐樓群</p>
         </div>
         
@@ -97,8 +114,18 @@
             <p>土瓜灣十三街建於1950-60年代，是香港戰後重建時期的重要見證。這些唐樓承載了當時移民家庭的居住記憶，展現了獨特的建築風格。</p>
         </div>
         
+        <div class="ar-preview">
+            <h3><i class="fas fa-vr-cardboard"></i> AR體驗預覽</h3>
+            <p>在現場使用AR功能，您將看到：</p>
+            <ul style="text-align: left; margin: 15px 0; padding-left: 20px;">
+                <li>1950年代建築原貌重現</li>
+                <li>歷史照片對比展示</li>
+                <li>居民口述歷史音頻</li>
+            </ul>
+        </div>
+        
         <div class="task-card">
-            <h3><i class="fas fa-tasks"></i> 探索任務</h3>
+            <h3 style="color: #8B4513;"><i class="fas fa-tasks"></i> 探索任務</h3>
             <ul style="margin: 15px 0; padding-left: 20px;">
                 <li>觀察唐樓的騎樓式設計和露台特色</li>
                 <li>記錄至少3棟不同唐樓的建築年份</li>
@@ -108,7 +135,7 @@
         </div>
         
         <div class="historical-info">
-            <h3><i class="fas fa-book"></i> 歷史背景</h3>
+            <h3 style="color: #1f2937;"><i class="fas fa-book"></i> 歷史背景</h3>
             <div class="fact-item">
                 <strong>人口急增時期</strong><br>
                 1950年代大量內地移民來港，住屋需求急劇增加
@@ -124,7 +151,7 @@
         </div>
         
         <div style="background: #d4edda; padding: 15px; border-radius: 10px; margin: 20px 0;">
-            <h4><i class="fas fa-lightbulb"></i> 探索提示</h4>
+            <h4 style="color: #155724;"><i class="fas fa-lightbulb"></i> 探索提示</h4>
             <p>留意建築物的簷篷、鐵窗、地磚等細節，這些都是時代的印記。嘗試與老街坊交流，了解當年的生活點滴。</p>
         </div>
         
@@ -146,14 +173,8 @@
         
         // 頁面訪問追蹤
         window.onload = function() {
-            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
-            analyticsData.push({
-                timestamp: new Date().toISOString(),
-                event: 'mission_page_view',
-                page: 'mission2',
-                team: new URLSearchParams(window.location.search).get('team')
-            });
-            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
+            console.log('🔍 第二關頁面已加載');
+            // 這裡可以添加分析代碼
         };
     </script>
 </body>
