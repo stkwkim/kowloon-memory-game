@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任務1：工業記憶覺醒 - 九龍記憶庫</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: white;
+            overflow: hidden;
+        }
+        .instruction {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+        .password-display {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            padding: 25px 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 3px solid #FFD700;
+            display: none;
+            z-index: 1001;
+            min-width: 300px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1002;
+            font-size: 1.2em;
+        }
+        .hint-system {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .hint-toggle {
+            background: #4FC3F7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .hint-content {
+            display: none;
+            color: white;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .hint-section {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a6c, #2a5298);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载界面 -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <h3>AR系統加載中</h3>
+        <p>請稍候...</p>
+    </div>
+
+    <!-- 主界面 -->
+    <div id="mainInterface" style="display: none;">
+        <!-- 返回按钮 -->
+        <button class="back-button" onclick="goBack()">←</button>
+
+        <!-- 操作指引 -->
+        <div class="instruction">
+            <h2>🔍 任務1：工業記憶掃描</h2>
+            <p>請掃描<b>牛棚藝術村主紅磚拱門下第三排的菱形磚塊圖案</b></p>
+            <p>保持手機穩定，確保光線充足</p>
+        </div>
+
+        <!-- AR场景 -->
+        <a-scene 
+            embedded 
+            arjs="sourceType: webcam; 
+                   debugUIEnabled: false; 
+                   detectionMode: mono; 
+                   maxDetectionRate: 60;"
+            renderer="logarithmicDepthBuffer: true;
+                      precision: high;"
+            vr-mode-ui="enabled: false"
+        >
+            <!-- 工业记忆标记 -->
+            <a-marker 
+                id="industryMarker"
+                type="pattern" 
+                url="patterns/task1.patt"
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                emitevents="true"
+                size="0.5"
+            >
+                <!-- 3D密码文字 -->
+                <a-text 
+                    value="7391" 
+                    position="0 0.8 0" 
+                    align="center"
+                    color="#FFD700"
+                    scale="2.5 2.5 2.5"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 4000"
+                ></a-text>
+                
+                <!-- 旋转的工业齿轮 -->
+                <a-entity
+                    geometry="primitive: cylinder; radius: 0.4; height: 0.15; segmentsRadial: 24"
+                    material="color: #8B4513; roughness: 0.7; metalness: 0.3"
+                    position="0 0.3 0"
+                    animation="property: rotation; to: 360 0 0; loop: true; dur: 3000"
+                ></a-entity>
+                
+                <!-- 浮动粒子效果 -->
+                <a-entity
+                    particle-system="preset: dust; 
+                                    color: #FF6B6B, #4FC3F7; 
+                                    particleCount: 150;"
+                    position="0 0.5 0"
+                ></a-entity>
+            </a-marker>
+            
+            <!-- 静态相机 -->
+            <a-entity camera></a-entity>
+
+            <!-- 环境光 -->
+            <a-entity light="type: ambient; color: #FFFFFF; intensity: 0.6"></a-entity>
+            <a-entity light="type: directional; color: #FFFFFF; intensity: 0.8" position="1 1 1"></a-entity>
+        </a-scene>
+
+        <!-- 密码显示 -->
+        <div class="password-display" id="passwordBox">
+            <h3>🎯 記憶密碼已找到！</h3>
+            <div style="font-size: 3em; font-weight: bold; color: #FFD700; margin: 15px 0;">7391</div>
+            <p>請返回Google表單輸入此密碼</p>
+            <button onclick="copyPassword()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-top: 10px;">📋 複製密碼</button>
+        </div>
+
+        <!-- 提示系统 -->
+        <div class="hint-system">
+            <button class="hint-toggle" onclick="toggleHint()">💡 顯示掃描提示</button>
+            <div class="hint-content" id="hintContent">
+                <div class="hint-section">
+                    <strong>🎯 精確位置：</strong><br>
+                    • 牛棚藝術村主入口紅磚拱門<br>
+                    • 第三排磚塊，從左數第5-7塊<br>
+                    • 菱形排列的深色磚塊圖案
+                </div>
+                <div class="hint-section">
+                    <strong>📱 最佳掃描：</strong><br>
+                    • 距離：0.8-1.2米<br>
+                    • 角度：與牆面平行<br>
+                    • 光線：避免正午強光
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成
+        window.addEventListener('DOMContentLoaded', function() {
+            // 模拟加载过程
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainInterface').style.display = 'block';
+                initializeAR();
+            }, 2000);
+        });
+
+        function initializeAR() {
+            const marker = document.getElementById('industryMarker');
+            
+            // 标记识别事件
+            marker.addEventListener('markerFound', function() {
+                console.log('標記識別成功');
+                document.getElementById('passwordBox').style.display = 'block';
+                
+                // 振动反馈
+                if (navigator.vibrate) {
+                    navigator.vibrate([100, 50, 100]);
+                }
+            });
+
+            marker.addEventListener('markerLost', function() {
+                console.log('標記識別丢失');
+                document.getElementById('passwordBox').style.display = 'none';
+            });
+        }
+
+        function copyPassword() {
+            navigator.clipboard.writeText('7391').then(function() {
+                alert('密碼「7391」已複製到剪貼簿！');
+            }).catch(function(err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動記錄密碼：7391');
+            });
+        }
+
+        function toggleHint() {
+            const hintContent = document.getElementById('hintContent');
+            const toggleButton = document.querySelector('.hint-toggle');
+            
+            if (hintContent.style.display === 'block') {
+                hintContent.style.display = 'none';
+                toggleButton.textContent = '💡 顯示掃描提示';
+            } else {
+                hintContent.style.display = 'block';
+                toggleButton.textContent = '💡 隱藏掃描提示';
+            }
+        }
+
+        function goBack() {
+            if (confirm('確定要離開嗎？您的進度將不會被保存。')) {
+                window.history.back();
+            }
+        }
+    </script>
+</body>
+</html>

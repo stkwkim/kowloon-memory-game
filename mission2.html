@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第二關提示 - 九龍記憶庫</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei'; padding: 20px; }
+        .mission-card { 
+            background: #f0f8ff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="mission-card">
+        <h2>🎯 第二關任務解鎖！</h2>
+        <p><strong>地點：</strong>土瓜灣老街市</p>
+        <p><strong>任務：</strong>尋找老字號店鋪，記錄它們的故事</p>
+        <p><strong>提示：</strong>留意那些招牌陳舊但依然營業的店鋪</p>
+        <p><strong>下一關QR碼將在完成任務後顯示</strong></p>
+        
+        <button onclick="goBackToGame()">返回遊戲地圖</button>
+    </div>
+
+    <script>
+        function goBackToGame() {
+            // 獲取隊伍名稱從URL參數
+            const urlParams = new URLSearchParams(window.location.search);
+            const team = urlParams.get('team');
+            window.location.href = `index.html?team=${team}`;
+        }
+    </script>
+</body>
+</html>

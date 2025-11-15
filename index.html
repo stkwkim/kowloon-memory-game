@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九龍記憶庫 - AR解謎之旅</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .login-screen, .game-screen {
+            text-align: center;
+        }
+        .game-screen {
+            display: none;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .mission-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border: 3px dashed #fdcb6e;
+            padding: 10px;
+            background: white;
+        }
+        .completed {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 登錄界面 -->
+        <div class="login-screen" id="loginScreen">
+            <h1>🏙️ 九龍記憶庫</h1>
+            <p>AR解謎之旅 - 探索土瓜灣至九龍城的秘密</p>
+            
+            <input type="text" id="teamName" placeholder="隊伍名稱">
+            <input type="password" id="startCode" placeholder="啟動密碼">
+            <button onclick="startGame()">開始冒險</button>
+            
+            <div style="margin-top: 20px; font-size: 14px; color: #666;">
+                <p>📞 需要幫助？聯絡: +852 XXXX XXXX</p>
+            </div>
+        </div>
+
+        <!-- 遊戲界面 -->
+        <div class="game-screen" id="gameScreen">
+            <h2 id="currentLocation">當前位置</h2>
+            <div class="mission-card" id="missionInfo">
+                <h3 id="missionTitle">任務標題</h3>
+                <p id="missionDescription">任務描述</p>
+                <div id="missionTask"></div>
+            </div>
+            
+            <div id="qrSection">
+                <h4>📱 掃描QR碼繼續</h4>
+                <div class="qr-code" id="qrCodeDisplay">
+                    <!-- QR碼將在這裡顯示 -->
+                </div>
+                <p id="qrHint">掃描此QR碼獲取下一關提示</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button onclick="showProgress()">📊 查看進度</button>
+                <button onclick="resetGame()">🔄 重新開始</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
