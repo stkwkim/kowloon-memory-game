@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九龍記憶庫 | AR歷史解謎體驗</title>
+    <title>九龍記憶庫 | 專業AR城市解謎體驗 - 收益支持義工團體</title>
+    <meta name="description" content="香港專業AR城市解謎遊戲，8關卡深度探索九龍城區歷史，收益支持本地義工團體發展">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
@@ -23,159 +25,637 @@
         }
         
         body {
-            font-family: 'Microsoft JhengHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            font-family: 'Inter', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--light);
         }
         
-        .login-container {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 400px;
+        /* 導航欄 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 0;
+            position: fixed;
+            top: 0;
             width: 100%;
-            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: var(--primary);
-            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            text-decoration: none;
         }
         
-        .welcome-text {
-            color: #6b7280;
-            margin-bottom: 2rem;
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
         }
         
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
             font-weight: 500;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
         }
         
-        input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 1rem;
+        .nav-links a:hover {
+            color: var(--primary);
         }
         
         .login-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* 英雄區域 */
+        .hero {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(124, 58, 237, 0.85)), url('https://images.unsplash.com/photo-1541332246502-bc034c62d8b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 2rem 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent), #eab308);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* 價格方案 */
+        .pricing {
+            padding: 100px 2rem;
+            background: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .pricing-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1.5rem 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #6b7280;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .features-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .pricing-button {
             width: 100%;
             padding: 1rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 1.5rem;
+            transition: all 0.3s;
         }
         
-        .demo-accounts {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 2rem;
+        .pricing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
         
-        .demo-account {
+        /* 支付彈窗 */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-modal.active {
+            display: flex;
+        }
+        
+        .payment-container {
             background: white;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .payment-method {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        
+        .disclaimer {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+            color: #dc2626;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">
-            <i class="fas fa-landmark"></i>
-            九龍記憶庫
-        </div>
-        
-        <h1>歡迎登入</h1>
-        <p class="welcome-text">請選擇測試帳號開始遊戲</p>
-        
-        <div class="demo-accounts">
-            <h3 style="margin-bottom: 1rem;">測試帳號 (密碼: kowloon2024)</h3>
-            
-            <div class="demo-account" onclick="fillDemoAccount('history_explorer')">
-                <strong>歷史探索者</strong>
-                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: history_explorer</div>
-            </div>
-            
-            <div class="demo-account" onclick="fillDemoAccount('urban_detective')">
-                <strong>城市偵探</strong>
-                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: urban_detective</div>
-            </div>
-            
-            <div class="demo-account" onclick="fillDemoAccount('new_adventurer')">
-                <strong>新手冒險家</strong>
-                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: new_adventurer</div>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-landmark"></i>
+                九龍記憶庫
+            </a>
+            <div class="nav-links">
+                <a href="#pricing">價格方案</a>
+                <a href="#about">關於我們</a>
+                <a href="#contact">聯絡我們</a>
+                <a href="#" class="login-button" onclick="showLoginModal()">
+                    <i class="fas fa-user"></i> 會員登入
+                </a>
             </div>
         </div>
+    </nav>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">用戶名稱</label>
-                <input type="text" id="username" placeholder="輸入用戶名稱" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">密碼</label>
-                <input type="password" id="password" placeholder="輸入密碼" required>
-            </div>
-            
-            <button type="submit" class="login-button">
-                <i class="fas fa-sign-in-alt"></i> 開始遊戲
+    <!-- 英雄區域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>探索九龍失落的記憶</h1>
+            <p>香港首個專業AR城市解謎遊戲 • 8關卡深度歷史體驗 • 收益支持義工團體發展</p>
+            <button class="cta-button" onclick="showPricing()">
+                <i class="fas fa-ticket-alt"></i> 立即預約體驗
             </button>
-        </form>
+        </div>
+    </section>
+
+    <!-- 價格方案 -->
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <h2>選擇您的探索方案</h2>
+            <p>收益用於支持本地義工團體社區服務</p>
+        </div>
+        <div class="pricing-grid">
+            <!-- 學生方案 -->
+            <div class="pricing-card">
+                <h3>學生體驗</h3>
+                <div class="price">$128<span>/位</span></div>
+                <ul class="features-list">
+                    <li>完整8關卡AR體驗</li>
+                    <li>4-6小時探索旅程</li>
+                    <li>學生身份驗證</li>
+                    <li>電子成就證書</li>
+                    <li>基礎技術支援</li>
+                </ul>
+                <button class="pricing-button" onclick="selectPlan('student', 128)">
+                    選擇學生方案
+                </button>
+            </div>
+            
+            <!-- 標準方案 -->
+            <div class="pricing-card featured">
+                <div class="pricing-badge">最受歡迎</div>
+                <h3>標準體驗</h3>
+                <div class="price">$298<span>/位</span></div>
+                <ul class="features-list">
+                    <li>完整8關卡AR體驗</li>
+                    <li>優先技術支援</li>
+                    <li>獨家歷史內容</li>
+                    <li>專業成就證書</li>
+                    <li>社區活動邀請</li>
+                </ul>
+                <button class="pricing-button" onclick="selectPlan('standard', 298)">
+                    選擇標準方案
+                </button>
+            </div>
+            
+            <!-- 會員方案 -->
+            <div class="pricing-card">
+                <h3>會員優惠</h3>
+                <div class="price">$228<span>/位</span></div>
+                <ul class="features-list">
+                    <li>完整8關卡AR體驗</li>
+                    <li>會員專屬優惠價</li>
+                    <li>積分獎賞計劃</li>
+                    <li>活動優先報名</li>
+                    <li>會員通訊訂閱</li>
+                </ul>
+                <button class="pricing-button" onclick="selectPlan('member', 228)">
+                    會員專享
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 支付彈窗 -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2>完成預約</h2>
+                <p>請填寫資料並選擇支付方式</p>
+            </div>
+            
+            <form id="paymentForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">參加者姓名</label>
+                    <input type="text" id="customerName" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">電郵地址</label>
+                    <input type="email" id="customerEmail" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">電話號碼</label>
+                    <input type="tel" id="customerPhone" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">參與人數</label>
+                    <input type="number" id="participantCount" min="1" value="1" style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="dataConsent" required>
+                        <span>我同意收集個人資料作活動安排及後續聯絡</span>
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="marketingConsent">
+                        <span>我願意接收義工活動及社區服務資訊</span>
+                    </label>
+                </div>
+
+                <div class="disclaimer">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 免責聲明</h4>
+                    <p>參加者需自行負責活動期間的人身安全，主辦單位不承擔任何意外責任。建議購買個人旅遊保險。</p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="disclaimerConsent" required>
+                        <span>我已閱讀並同意以上免責聲明</span>
+                    </label>
+                </div>
+
+                <h4 style="margin-bottom: 1rem;">選擇支付方式</h4>
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectPaymentMethod('alipay')">
+                        <i class="fab fa-alipay" style="font-size: 2rem; color: #1677ff; margin-bottom: 0.5rem;"></i>
+                        <div>支付寶香港</div>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('wechat')">
+                        <i class="fab fa-weixin" style="font-size: 2rem; color: #07c160; margin-bottom: 0.5rem;"></i>
+                        <div>微信支付</div>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('payme')">
+                        <i class="fas fa-mobile-alt" style="font-size: 2rem; color: #00c3ff; margin-bottom: 0.5rem;"></i>
+                        <div>PayMe</div>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('fps')">
+                        <i class="fas fa-exchange-alt" style="font-size: 2rem; color: #8b5cf6; margin-bottom: 0.5rem;"></i>
+                        <div>轉數快 FPS</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button type="submit" class="pricing-button">
+                        <i class="fas fa-lock"></i> 確認支付
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
-        function fillDemoAccount(username) {
-            document.getElementById('username').value = username;
-            document.getElementById('password').value = 'kowloon2024';
+        let selectedPlan = null;
+        let selectedPaymentMethod = null;
+        
+        function showPricing() {
+            document.getElementById('pricing').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
         }
-
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        
+        function selectPlan(planType, price) {
+            selectedPlan = { type: planType, price: price };
+            showPaymentModal();
+        }
+        
+        function showPaymentModal() {
+            document.getElementById('paymentModal').classList.add('active');
+        }
+        
+        function hidePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+        
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // 更新選中狀態
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+        
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            processPayment();
+        });
+        
+        function processPayment() {
+            const formData = {
+                name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value,
+                participants: document.getElementById('participantCount').value,
+                plan: selectedPlan,
+                paymentMethod: selectedPaymentMethod,
+                dataConsent: document.getElementById('dataConsent').checked,
+                marketingConsent: document.getElementById('marketingConsent').checked,
+                disclaimerConsent: document.getElementById('disclaimerConsent').checked
+            };
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            if (!selectedPaymentMethod) {
+                alert('請選擇支付方式');
+                return;
+            }
             
-            if (password === 'kowloon2024') {
-                localStorage.setItem('currentUser', JSON.stringify({
-                    username: username,
-                    loginTime: new Date()
-                }));
+            // 這裡可以接入真實支付系統
+            simulatePaymentProcessing(formData);
+        }
+        
+        function simulatePaymentProcessing(formData) {
+            // 顯示處理中
+            const submitBtn = document.querySelector('#paymentForm button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 處理中...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // 模擬支付成功
+                alert('支付成功！登入資料已發送至: ' + formData.email);
                 
-                window.location.href = 'game.html';
-            } else {
-                alert('密碼錯誤！請使用密碼: kowloon2024');
+                // 創建用戶帳號
+                createUserAccount(formData);
+                
+                // 隱藏支付彈窗
+                hidePaymentModal();
+                
+                // 重置按鈕
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+        
+        function createUserAccount(formData) {
+            const userData = {
+                username: formData.email.split('@')[0] + '_' + Date.now().toString().slice(-4),
+                password: generatePassword(),
+                customerInfo: formData,
+                signupTime: new Date(),
+                plan: formData.plan
+            };
+            
+            // 保存到本地存儲 (實際應用中應該發送到服務器)
+            let users = JSON.parse(localStorage.getItem('kowloonUsers') || '{}');
+            users[userData.username] = userData;
+            localStorage.setItem('kowloonUsers', JSON.stringify(users));
+            
+            // 發送確認郵件 (模擬)
+            console.log('發送登入資料至:', formData.email);
+            console.log('用戶名:', userData.username);
+            console.log('密碼:', userData.password);
+        }
+        
+        function generatePassword() {
+            return Math.random().toString(36).slice(-8) + 'A1!';
+        }
+        
+        // 點擊彈窗外部關閉
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hidePaymentModal();
             }
         });
+        
+        // 管理員測試帳號
+        function createAdminTestAccount() {
+            const adminAccount = {
+                username: 'admin_test',
+                password: 'admin2024',
+                customerInfo: {
+                    name: '管理員測試',
+                    email: 'admin@kowloonmemory.hk',
+                    phone: '00000000',
+                    plan: { type: 'standard', price: 0 }
+                },
+                isAdmin: true,
+                signupTime: new Date()
+            };
+            
+            let users = JSON.parse(localStorage.getItem('kowloonUsers') || '{}');
+            users[adminAccount.username] = adminAccount;
+            localStorage.setItem('kowloonUsers', JSON.stringify(users));
+            
+            console.log('管理員測試帳號已創建:');
+            console.log('用戶名: admin_test');
+            console.log('密碼: admin2024');
+        }
+        
+        // 頁面加載時創建管理員測試帳號
+        window.addEventListener('load', createAdminTestAccount);
     </script>
 </body>
 </html>
