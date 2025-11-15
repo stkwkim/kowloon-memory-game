@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九龍記憶庫 | AR歷史解謎體驗 - 探索土瓜灣至九龍城的百年故事</title>
-    <meta name="description" content="4-6小時沉浸式AR歷史解謎體驗，透過科技重現土瓜灣至九龍城的百年變遷。免費社區文化項目。">
+    <title>九龍記憶庫 | AR歷史解謎體驗</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --primary-light: #dbeafe;
             --secondary: #7c3aed;
             --accent: #f59e0b;
             --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
             --dark: #1f2937;
-            --darker: #111827;
             --light: #f8fafc;
-            --gray: #6b7280;
-            --gray-light: #9ca3af;
         }
         
         * {
@@ -31,674 +23,158 @@
         }
         
         body {
-            font-family: 'Inter', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
-            line-height: 1.7;
-            color: var(--dark);
-            background: var(--light);
-            overflow-x: hidden;
-        }
-        
-        /* 導航欄 */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1.2rem 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-        }
-        
-        .logo:hover {
-            color: var(--primary-dark);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 1.05rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .login-button {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
-        }
-        
-        /* 英雄區域 */
-        .hero {
-            background: linear-gradient(135deg, 
-                rgba(37, 99, 235, 0.9) 0%, 
-                rgba(124, 58, 237, 0.85) 100%),
-                url('https://images.unsplash.com/photo-1541332246502-bc034c62d8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            padding: 180px 2rem 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            animation: float 20s linear infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-        
-        .hero-content {
-            max-width: 850px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-            font-weight: 400;
-            line-height: 1.6;
-        }
-        
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            margin-top: 4rem;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #e0f2fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent), #eab308);
-            color: white;
-            padding: 1.2rem 3rem;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
-        }
-        
-        .cta-button.secondary {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-        }
-        
-        /* 遊戲預覽區域 */
-        .game-preview {
-            padding: 100px 2rem;
-            background: var(--light);
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-        
-        .section-header h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .section-header p {
-            font-size: 1.3rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .preview-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-        
-        .preview-card {
-            background: white;
-            border-radius: 20px;
-            padding: 0;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .preview-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-        
-        .preview-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary-light), #e0e7ff);
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: var(--primary);
-        }
-        
-        .preview-content {
-            padding: 2.5rem;
-        }
-        
-        .preview-content h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .preview-content p {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .preview-features {
-            list-style: none;
-        }
-        
-        .preview-features li {
-            padding: 0.5rem 0;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .preview-features li::before {
-            content: "✓";
-            color: var(--success);
-            font-weight: bold;
-        }
-        
-        /* 響應式設計 */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .hero-stats {
-                gap: 2rem;
-            }
-            
-            .stat-number {
-                font-size: 2rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-button {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .section-header h2 {
-                font-size: 2.2rem;
-            }
-        }
-        
-        /* 登入彈窗 */
-        .login-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .login-modal.active {
-            display: flex;
+            padding: 20px;
         }
         
         .login-container {
             background: white;
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 3rem;
-            max-width: 440px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-            animation: modalSlideIn 0.3s ease-out;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
         }
         
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .welcome-text {
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-accounts {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        
+        .demo-account {
+            background: white;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <!-- 導航欄 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-landmark"></i>
-                九龍記憶庫
-            </a>
-            <div class="nav-links">
-                <a href="#about">關於體驗</a>
-                <a href="#preview">遊戲預覽</a>
-                <a href="#missions">探索路線</a>
-                <a href="#community">社區參與</a>
-                <a href="#contact">聯絡我們</a>
-                <a href="#" class="login-button" onclick="showLoginModal()">
-                    <i class="fas fa-play"></i> 開始探索
-                </a>
-            </div>
-            <a href="#" class="login-button mobile-login" onclick="showLoginModal()" style="display: none;">
-                <i class="fas fa-play"></i> 開始
-            </a>
-        </div>
-    </nav>
-
-    <!-- 英雄區域 -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>重現九龍失落的記憶</h1>
-            <p>4-6小時沉浸式AR歷史解謎體驗，透過科技探索土瓜灣至九龍城的百年變遷。走進歷史，見證社區故事。</p>
-            
-            <div class="cta-buttons">
-                <a href="#" class="cta-button" onclick="showLoginModal()">
-                    <i class="fas fa-play-circle"></i> 立即開始探索
-                </a>
-                <a href="#preview" class="cta-button secondary">
-                    <i class="fas fa-video"></i> 觀看體驗預覽
-                </a>
-            </div>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">4-6</div>
-                    <div class="stat-label">小時探索體驗</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">8+</div>
-                    <div class="stat-label">個歷史地點</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">個歷史故事</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">免費參與</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 遊戲預覽區域 -->
-    <section class="game-preview" id="preview">
-        <div class="section-header">
-            <h2>沉浸式歷史體驗</h2>
-            <p>結合AR技術與實地探索，讓歷史故事活現眼前</p>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-landmark"></i>
+            九龍記憶庫
         </div>
         
-        <div class="preview-grid">
-            <div class="preview-card">
-                <div class="preview-image">
-                    <i class="fas fa-vr-cardboard"></i>
-                </div>
-                <div class="preview-content">
-                    <h3>AR歷史重現</h3>
-                    <p>透過手機相機，在真實場景中重現歷史畫面，觀看1960年代的海岸線、昔日的社區生活場景。</p>
-                    <ul class="preview-features">
-                        <li>場景識別觸發歷史影片</li>
-                        <li>虛實結合的互動體驗</li>
-                        <li>無需下載額外APP</li>
-                    </ul>
-                </div>
+        <h1>歡迎登入</h1>
+        <p class="welcome-text">請選擇測試帳號開始遊戲</p>
+        
+        <div class="demo-accounts">
+            <h3 style="margin-bottom: 1rem;">測試帳號 (密碼: kowloon2024)</h3>
+            
+            <div class="demo-account" onclick="fillDemoAccount('history_explorer')">
+                <strong>歷史探索者</strong>
+                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: history_explorer</div>
             </div>
             
-            <div class="preview-card">
-                <div class="preview-image">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <div class="preview-content">
-                    <h3>解謎探索</h3>
-                    <p>透過解開歷史謎題，收集線索物品，逐步揭開九龍城區的發展故事和社區記憶。</p>
-                    <ul class="preview-features">
-                        <li>密碼解鎖任務系統</li>
-                        <li>收集歷史文物副本</li>
-                        <li>逐步推進的敘事</li>
-                    </ul>
-                </div>
+            <div class="demo-account" onclick="fillDemoAccount('urban_detective')">
+                <strong>城市偵探</strong>
+                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: urban_detective</div>
             </div>
             
-            <div class="preview-card">
-                <div class="preview-image">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="preview-content">
-                    <h3>實地探索</h3>
-                    <p>走訪8個重要歷史地點，從土瓜灣海邊到九龍城寨，親身感受社區的變遷軌跡。</p>
-                    <ul class="preview-features">
-                        <li>精心設計探索路線</li>
-                        <li>在地歷史深度導覽</li>
-                        <li>4-6小時完整體驗</li>
-                    </ul>
-                </div>
+            <div class="demo-account" onclick="fillDemoAccount('new_adventurer')">
+                <strong>新手冒險家</strong>
+                <div style="font-size: 0.9rem; color: #6b7280;">用戶名: new_adventurer</div>
             </div>
         </div>
-    </section>
 
-    <!-- 登入彈窗 -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-container">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div class="logo" style="justify-content: center; font-size: 1.8rem; margin-bottom: 1rem;">
-                    <i class="fas fa-landmark"></i>
-                    九龍記憶庫
-                </div>
-                <h2 style="margin-bottom: 0.5rem; color: var(--dark);">開始探索之旅</h2>
-                <p style="color: var(--gray);">選擇測試帳號立即體驗</p>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">用戶名稱</label>
+                <input type="text" id="username" placeholder="輸入用戶名稱" required>
             </div>
             
-            <div style="margin-bottom: 2rem;">
-                <div style="background: var(--primary-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">🧪 測試帳號</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">所有測試帳號密碼：<code>kowloon2024</code></p>
-                </div>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div class="demo-account" onclick="selectAccount('history_explorer', '歷史探索者', '第2關 | 5個物品')" 
-                         style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; cursor: pointer; transition: all 0.3s; border: 2px solid #e5e7eb;">
-                        <div style="display: flex; justify-content: between; align-items: center;">
-                            <div>
-                                <strong style="color: var(--dark);">歷史探索者</strong>
-                                <div style="font-size: 0.9rem; color: var(--gray); margin-top: 0.25rem;">
-                                    用戶名: <code>history_explorer</code>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 0.8rem; color: var(--success); font-weight: 500;">第2關進行中</div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">5個收集物品</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="demo-account" onclick="selectAccount('urban_detective', '城市偵探', '第4關 | 9個物品')" 
-                         style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; cursor: pointer; transition: all 0.3s; border: 2px solid #e5e7eb;">
-                        <div style="display: flex; justify-content: between; align-items: center;">
-                            <div>
-                                <strong style="color: var(--dark);">城市偵探</strong>
-                                <div style="font-size: 0.9rem; color: var(--gray); margin-top: 0.25rem;">
-                                    用戶名: <code>urban_detective</code>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 0.8rem; color: var(--primary); font-weight: 500;">第4關進行中</div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">9個收集物品</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="demo-account" onclick="selectAccount('new_adventurer', '新手冒險家', '第1關 | 全新開始')" 
-                         style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; cursor: pointer; transition: all 0.3s; border: 2px solid #e5e7eb;">
-                        <div style="display: flex; justify-content: between; align-items: center;">
-                            <div>
-                                <strong style="color: var(--dark);">新手冒險家</strong>
-                                <div style="font-size: 0.9rem; color: var(--gray); margin-top: 0.25rem;">
-                                    用戶名: <code>new_adventurer</code>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 0.8rem; color: var(--accent); font-weight: 500;">全新開始</div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">從第1關開始</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="password">密碼</label>
+                <input type="password" id="password" placeholder="輸入密碼" required>
             </div>
             
-            <div style="border-top: 1px solid #e5e7eb; padding-top: 1.5rem;">
-                <button onclick="startGame()" class="login-button" style="width: 100%; justify-content: center;">
-                    <i class="fas fa-sign-in-alt"></i> 開始遊戲
-                </button>
-                <p style="text-align: center; margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">
-                    點擊帳號選擇，然後開始遊戲
-                </p>
-            </div>
-        </div>
+            <button type="submit" class="login-button">
+                <i class="fas fa-sign-in-alt"></i> 開始遊戲
+            </button>
+        </form>
     </div>
 
     <script>
-        let selectedAccount = null;
-        
-        function showLoginModal() {
-            document.getElementById('loginModal').classList.add('active');
+        function fillDemoAccount(username) {
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = 'kowloon2024';
         }
-        
-        function hideLoginModal() {
-            document.getElementById('loginModal').classList.remove('active');
-        }
-        
-        function selectAccount(username, displayName, status) {
-            // 移除所有選中狀態
-            document.querySelectorAll('.demo-account').forEach(acc => {
-                acc.style.borderColor = '#e5e7eb';
-                acc.style.background = '#f8fafc';
-            });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // 設置選中狀態
-            event.currentTarget.style.borderColor = 'var(--primary)';
-            event.currentTarget.style.background = 'var(--primary-light)';
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
-            selectedAccount = {
-                username: username,
-                displayName: displayName,
-                status: status
-            };
-        }
-        
-        function startGame() {
-            if (!selectedAccount) {
-                alert('請先選擇一個測試帳號');
-                return;
-            }
-            
-            // 保存用戶選擇
-            localStorage.setItem('currentUser', JSON.stringify({
-                username: selectedAccount.username,
-                displayName: selectedAccount.displayName,
-                loginTime: new Date()
-            }));
-            
-            // 跳轉到遊戲頁面
-            window.location.href = 'game.html';
-        }
-        
-        // 點擊彈窗外部關閉
-        document.getElementById('loginModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideLoginModal();
-            }
-        });
-        
-        // 響應式顯示移動端登入按鈕
-        function checkMobile() {
-            const mobileLogin = document.querySelector('.mobile-login');
-            if (window.innerWidth <= 768) {
-                mobileLogin.style.display = 'inline-block';
+            if (password === 'kowloon2024') {
+                localStorage.setItem('currentUser', JSON.stringify({
+                    username: username,
+                    loginTime: new Date()
+                }));
+                
+                window.location.href = 'game.html';
             } else {
-                mobileLogin.style.display = 'none';
+                alert('密碼錯誤！請使用密碼: kowloon2024');
             }
-        }
-        
-        window.addEventListener('load', checkMobile);
-        window.addEventListener('resize', checkMobile);
-        
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
         });
     </script>
 </body>
