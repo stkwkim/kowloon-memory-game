@@ -6,72 +6,22 @@
     <title>第三關 - 九龍寨城公園 | 九龍記憶庫</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* 樣式與mission2.html類似，根據主題調整顏色 */
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
         }
         
         body {
-            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
         }
         
-        .mission-container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: rgba(255,255,255,0.95);
-            color: #333;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        .mission-content {
+            border-left-color: #2c3e50;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .timeline {
-            margin: 25px 0;
-        }
-        
-        .timeline-item {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border-left: 4px solid #e74c3c;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .year {
-            font-weight: bold;
-            color: #e74c3c;
-        }
-        
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-        
-        .task-section {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+        .ar-preview {
+            background: #2c3e50;
         }
     </style>
 </head>
@@ -82,36 +32,22 @@
             <p style="color: #666; margin-top: 10px;">九龍寨城公園 - 傳奇的三不管地帶</p>
         </div>
         
-        <div style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
-            <h3><i class="fas fa-history"></i> 歷史傳奇</h3>
-            <p>九龍寨城曾是世界上人口最密集的地方，在0.026平方公里的土地上居住近5萬人，形成獨特的社區生態。</p>
+        <div class="mission-content">
+            <h2 style="color: #2c3e50; margin-bottom: 15px;">🏯 消失的城寨記憶</h2>
+            <p>這裡曾經是著名的九龍寨城 - 世界上人口最密集的地方。1994年清拆後改建為公園，但它的傳奇故事仍在流傳。</p>
         </div>
         
-        <div class="timeline">
-            <h3 style="color: #2c3e50; margin-bottom: 15px;">📅 歷史時間線</h3>
-            
-            <div class="timeline-item">
-                <span class="year">清朝時期</span>
-                <p>設立軍事駐地，建有城牆和衙門</p>
-            </div>
-            
-            <div class="timeline-item">
-                <span class="year">1947-1993</span>
-                <p>獨特的「三不管」社區形成與發展</p>
-            </div>
-            
-            <div class="timeline-item">
-                <span class="year">1994年</span>
-                <p>歷時一年的清拆工程完成</p>
-            </div>
-            
-            <div class="timeline-item">
-                <span class="year">1995年</span>
-                <p>九龍寨城公園正式開放</p>
-            </div>
+        <div class="ar-preview">
+            <h3><i class="fas fa-vr-cardboard"></i> AR時光重現</h3>
+            <p>在現場使用AR功能，您將體驗：</p>
+            <ul style="text-align: left; margin: 15px 0; padding-left: 20px;">
+                <li>寨城3D建築重現</li>
+                <li>居民生活場景模擬</li>
+                <li>歷史影片資料播放</li>
+            </ul>
         </div>
         
-        <div class="task-section">
+        <div class="task-card">
             <h3 style="color: #2c3e50;"><i class="fas fa-search"></i> 探索任務</h3>
             <ul style="margin: 15px 0; padding-left: 20px;">
                 <li>尋找公園內的歷史遺跡和說明牌</li>
@@ -121,9 +57,20 @@
             </ul>
         </div>
         
-        <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 20px 0;">
-            <h4 style="color: #2c3e50;"><i class="fas fa-eye"></i> 觀察重點</h4>
-            <p>留意公園內的「八徑半」設計，這重現了當年寨城內狹窄巷道的感覺。尋找《九龍寨城公園碑記》，了解完整歷史。</p>
+        <div class="historical-info">
+            <h3 style="color: #2c3e50;"><i class="fas fa-history"></i> 時間線</h3>
+            <div class="fact-item">
+                <strong>清朝時期</strong><br>
+                設立軍事駐地，建有城牆和衙門
+            </div>
+            <div class="fact-item">
+                <strong>1947-1993</strong><br>
+                獨特的「三不管」社區形成與發展
+            </div>
+            <div class="fact-item">
+                <strong>1994年</strong><br>
+                歷時一年的清拆工程完成
+            </div>
         </div>
         
         <button onclick="goBackToGame()">
@@ -141,18 +88,6 @@
                 window.location.href = 'index.html';
             }
         }
-        
-        // 頁面訪問追蹤
-        window.onload = function() {
-            const analyticsData = JSON.parse(localStorage.getItem('kowloon_analytics') || '[]');
-            analyticsData.push({
-                timestamp: new Date().toISOString(),
-                event: 'mission_page_view',
-                page: 'mission3', 
-                team: new URLSearchParams(window.location.search).get('team')
-            });
-            localStorage.setItem('kowloon_analytics', JSON.stringify(analyticsData));
-        };
     </script>
 </body>
 </html>
