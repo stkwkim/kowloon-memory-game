@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
+    // 驗證登錄 - 更新版本
+function verifyLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const code = document.getElementById('loginCode').value;
+  
+  if (!email || !code) {
+    showError('請輸入郵箱和確認碼');
+    return;
+  }
+  
+  // 檢查確認碼（簡單驗證）
+  const lastCode = localStorage.getItem('lastConfirmationCode');
+  const lastEmail = localStorage.getItem('lastBookingEmail');
+  
+  if (email === lastEmail && code === lastCode) {
+    // 登錄成功
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('gameScreen').style.display = 'block';
+    
+    // 開始遊戲
+    startGame();
+    
+    // 提交積壓的分析數據
+    setTimeout(submitBatchAnalytics, 1000);
+    
+  } else {
+    showError('確認碼錯誤或已過期，請檢查後重試');
+  }
+}
     // 支付處理 - 更新版本
 async function processPayment() {
   const formData = {
