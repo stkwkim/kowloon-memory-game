@@ -1,6 +1,97 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
+    // 支付處理 - 更新版本
+async function processPayment() {
+  const formData = {
+    name: document.getElementById('fullName').value,
+    email: document.getElementById('userEmail').value,
+    phone: document.getElementById('userPhone').value,
+    plan: document.getElementById('planType').value,
+    participants: document.getElementById('participantCount').value,
+    date: document.getElementById('bookingDate').value,
+    time: document.getElementById('timeSlot').value,
+    consentData: document.getElementById('consentData').checked,
+    consentVolunteer: document.getElementById('consentVolunteer').checked
+  };
+  
+  // 前端驗證
+  if (!validateFormData(formData)) {
+    return;
+  }
+  
+  console.log('💳 處理支付:', formData);
+  
+  // 調用API提交預約
+  const result = await submitBookingToAPI(formData);
+  
+  if (result && result.success) {
+    // 保存用戶數據到本地存儲
+    const userData = {
+      teamName: formData.name,
+      userEmail: formData.email,
+      planType: formData.plan,
+      userConsents: {
+        dataCollection: formData.consentData,
+        volunteerInfo: formData.consentVolunteer
+      }
+    };
+    localStorage.setItem('kowloon_user_data', JSON.stringify(userData));
+    
+    // 顯示登錄界面
+    document.getElementById('paymentScreen').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'block';
+    
+    // 預填郵箱
+    document.getElementById('loginEmail').value = formData.email;
+  }
+}
+
+// 表單驗證
+function validateFormData(formData) {
+  if (!formData.name || formData.name.trim().length < 2) {
+    showError('請輸入有效的姓名（至少2個字符）');
+    return false;
+  }
+  
+  if (!formData.email || !isValidEmail(formData.email)) {
+    showError('請輸入有效的電子郵件地址');
+    return false;
+  }
+  
+  if (!formData.phone || formData.phone.trim().length < 8) {
+    showError('請輸入有效的電話號碼');
+    return false;
+  }
+  
+  if (!formData.plan) {
+    showError('請選擇方案類型');
+    return false;
+  }
+  
+  if (!formData.date) {
+    showError('請選擇預約日期');
+    return false;
+  }
+  
+  if (!formData.time) {
+    showError('請選擇預約時段');
+    return false;
+  }
+  
+  if (!formData.consentData) {
+    showError('請同意數據收集條款以繼續');
+    return false;
+  }
+  
+  return true;
+}
+
+// 郵箱驗證
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
     // API配置 - 請替換YOUR_SCRIPT_ID為實際ID
 const API_CONFIG = {
   BASE_URL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
