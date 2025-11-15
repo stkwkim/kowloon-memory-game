@@ -3,107 +3,560 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九龍記憶庫 - AR解謎之旅</title>
+    <title>九龍記憶庫 - 付費AR歷史解謎體驗</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --dark: #2d3436;
+        }
+        
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
         }
+        
         .container {
-            max-width: 400px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            color: #333;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 20px;
         }
-        .login-screen, .game-screen {
+        
+        /* 導航欄 */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        /* 英雄區域 */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1538529306115-2c6d5c42c3c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 20px 80px;
             text-align: center;
         }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* 價格方案 */
+        .pricing {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #f8f9fa;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 30px 0;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        /* 遊戲界面 */
+        .game-container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .login-screen, .game-screen, .payment-screen {
+            text-align: center;
+        }
+        
+        .payment-screen {
+            display: none;
+        }
+        
         .game-screen {
             display: none;
         }
-        input, button {
+        
+        input, select, button {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 16px;
+            font-family: inherit;
         }
+        
         button {
-            background: linear-gradient(135deg, #00b894, #00a085);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.3s;
         }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
         .mission-card {
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid var(--primary);
         }
+        
         .qr-code {
             width: 200px;
             height: 200px;
             margin: 20px auto;
-            border: 3px dashed #fdcb6e;
-            padding: 10px;
+            border: 3px dashed var(--warning);
+            padding: 15px;
             background: white;
+            border-radius: 10px;
         }
-        .completed {
-            background: #d4edda;
-            border-left-color: #28a745;
+        
+        .ar-content {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 150px;
+        }
+        
+        .historical-facts {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .social-share {
+            margin: 30px 0;
+        }
+        
+        .social-share button {
+            margin: 5px;
+            width: auto;
+            padding: 10px 20px;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 登錄界面 -->
-        <div class="login-screen" id="loginScreen">
-            <h1>🏙️ 九龍記憶庫</h1>
-            <p>AR解謎之旅 - 探索土瓜灣至九龍城的秘密</p>
-            
-            <input type="text" id="teamName" placeholder="隊伍名稱">
-            <input type="password" id="startCode" placeholder="啟動密碼">
-            <button onclick="startGame()">開始冒險</button>
-            
-            <div style="margin-top: 20px; font-size: 14px; color: #666;">
-                <p>📞 需要幫助？聯絡: +852 XXXX XXXX</p>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🏙️ 九龍記憶庫</div>
+            <div class="nav-links">
+                <a href="#about">關於我們</a>
+                <a href="#pricing">價格方案</a>
+                <a href="#contact">聯絡我們</a>
             </div>
         </div>
+    </nav>
 
-        <!-- 遊戲界面 -->
-        <div class="game-screen" id="gameScreen">
-            <h2 id="currentLocation">當前位置</h2>
-            <div class="mission-card" id="missionInfo">
-                <h3 id="missionTitle">任務標題</h3>
-                <p id="missionDescription">任務描述</p>
-                <div id="missionTask"></div>
-            </div>
+    <!-- 英雄區域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>探索九龍失落的記憶</h1>
+            <p>透過AR技術，重現土瓜灣至九龍城的百年歷史。4-6小時沉浸式體驗，深入了解香港的變遷。</p>
+            <button class="cta-button" onclick="showPayment()">
+                立即預約體驗 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 價格方案 -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 20px;">選擇您的體驗方案</h2>
+            <p style="text-align: center; color: #666; max-width: 600px; margin: 0 auto 50px;">
+                所有方案包含完整的AR解謎體驗、歷史導覽、紀念證書及社區支援
+            </p>
             
-            <div id="qrSection">
-                <h4>📱 掃描QR碼繼續</h4>
-                <div class="qr-code" id="qrCodeDisplay">
-                    <!-- QR碼將在這裡顯示 -->
+            <div class="pricing-grid">
+                <!-- 個人方案 -->
+                <div class="pricing-card">
+                    <h3>個人探索</h3>
+                    <div class="price">$98<span>/位</span></div>
+                    <ul class="features">
+                        <li>基礎AR歷史體驗</li>
+                        <li>4-6小時自助遊</li>
+                        <li>電子紀念證書</li>
+                        <li>社區資訊套裝</li>
+                        <li>電郵支援</li>
+                    </ul>
+                    <button onclick="selectPlan('individual')">選擇方案</button>
                 </div>
-                <p id="qrHint">掃描此QR碼獲取下一關提示</p>
+                
+                <!-- 團體方案 -->
+                <div class="pricing-card featured">
+                    <div style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);">
+                        最受歡迎
+                    </div>
+                    <h3>團體體驗</h3>
+                    <div class="price">$78<span>/位</span></div>
+                    <ul class="features">
+                        <li>完整AR歷史體驗</li>
+                        <li>專屬隊伍管理</li>
+                        <li>進階歷史內容</li>
+                        <li>優先技術支援</li>
+                        <li>義工組織推薦</li>
+                    </ul>
+                    <button onclick="selectPlan('group')">選擇方案</button>
+                </div>
+                
+                <!-- 深度體驗 -->
+                <div class="pricing-card">
+                    <h3>深度文化</h3>
+                    <div class="price">$158<span>/位</span></div>
+                    <ul class="features">
+                        <li>專家導覽體驗</li>
+                        <li>獨家歷史檔案</li>
+                        <li>專業攝影服務</li>
+                        <li>社區領袖交流</li>
+                        <li>永久會員資格</li>
+                    </ul>
+                    <button onclick="selectPlan('premium')">選擇方案</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 遊戲容器 -->
+    <div class="container">
+        <div class="game-container">
+            <!-- 支付界面 -->
+            <div class="payment-screen" id="paymentScreen">
+                <h2>預約您的歷史之旅</h2>
+                <form id="paymentForm">
+                    <input type="text" id="fullName" placeholder="完整姓名" required>
+                    <input type="email" id="userEmail" placeholder="電子郵件" required>
+                    <input type="tel" id="userPhone" placeholder="電話號碼" required>
+                    <select id="planType" required>
+                        <option value="">選擇方案</option>
+                        <option value="individual">個人探索 - $98</option>
+                        <option value="group">團體體驗 - $78/位</option>
+                        <option value="premium">深度文化 - $158</option>
+                    </select>
+                    <input type="number" id="participantCount" placeholder="參與人數" min="1" value="1">
+                    <input type="date" id="bookingDate" required>
+                    <select id="timeSlot" required>
+                        <option value="">選擇時段</option>
+                        <option value="09:00">上午 9:00</option>
+                        <option value="11:00">上午 11:00</option>
+                        <option value="14:00">下午 2:00</option>
+                        <option value="16:00">下午 4:00</option>
+                    </select>
+                    
+                    <div style="margin: 20px 0; text-align: left;">
+                        <label>
+                            <input type="checkbox" id="consentData" required>
+                            我同意收集我的資料作大數據分析及後續聯絡
+                        </label>
+                    </div>
+                    
+                    <div style="margin: 20px 0; text-align: left;">
+                        <label>
+                            <input type="checkbox" id="consentVolunteer">
+                            我願意接收義工組織及社區活動資訊
+                        </label>
+                    </div>
+                    
+                    <button type="submit">確認預約及付款</button>
+                </form>
             </div>
 
-            <div style="margin-top: 20px;">
-                <button onclick="showProgress()">📊 查看進度</button>
-                <button onclick="resetGame()">🔄 重新開始</button>
+            <!-- 登錄界面 -->
+            <div class="login-screen" id="loginScreen">
+                <h2>歡迎回來！</h2>
+                <p>請輸入您的預約資料登入</p>
+                <input type="email" id="loginEmail" placeholder="預約時使用的郵件">
+                <input type="text" id="loginCode" placeholder="確認碼（已發送至郵件）">
+                <button onclick="verifyLogin()">開始探索</button>
+                <p style="margin-top: 15px; font-size: 14px; color: #666;">
+                    未收到確認碼？<a href="#" onclick="resendCode()">重新發送</a>
+                </p>
+            </div>
+
+            <!-- 遊戲界面 -->
+            <div class="game-screen" id="gameScreen">
+                <h2 id="currentLocation">當前位置</h2>
+                
+                <div class="mission-card" id="missionInfo">
+                    <h3 id="missionTitle">任務標題</h3>
+                    <p id="missionDescription">任務描述</p>
+                    <div id="missionTask"></div>
+                </div>
+                
+                <div class="historical-facts" id="historicalFacts">
+                    <h4><i class="fas fa-book"></i> 歷史知識</h4>
+                </div>
+                
+                <div class="ar-content" id="arContent">
+                    <h4><i class="fas fa-vr-cardboard"></i> AR歷史重現</h4>
+                </div>
+                
+                <div id="qrSection" style="display: none;">
+                    <h4><i class="fas fa-qrcode"></i> 下一關QR碼</h4>
+                    <div class="qr-code" id="qrCodeDisplay"></div>
+                    <p>完成任務後掃描進入下一關</p>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button onclick="completeMission()"><i class="fas fa-check"></i> 完成任務</button>
+                    <button onclick="showProgress()"><i class="fas fa-chart-bar"></i> 我的進度</button>
+                    <button onclick="showSocialShare()"><i class="fas fa-share-alt"></i> 分享成就</button>
+                </div>
+                
+                <div class="social-share" id="socialShare" style="display: none;">
+                    <h4>分享您的探索經歷</h4>
+                    <button style="background: #1877f2;" onclick="shareSocial('facebook')">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button style="background: #1da1f2;" onclick="shareSocial('twitter')">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                    <button style="background: #25d366;" onclick="shareSocial('whatsapp')">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="game.js"></script>
+    <script>
+        // 顯示支付界面
+        function showPayment() {
+            document.getElementById('paymentScreen').style.display = 'block';
+        }
+        
+        // 選擇方案
+        function selectPlan(planType) {
+            document.getElementById('planType').value = planType;
+            showPayment();
+        }
+        
+        // 表單提交
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processPayment();
+        });
+        
+        // 支付處理
+        function processPayment() {
+            const formData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                plan: document.getElementById('planType').value,
+                participants: document.getElementById('participantCount').value,
+                date: document.getElementById('bookingDate').value,
+                time: document.getElementById('timeSlot').value,
+                consentData: document.getElementById('consentData').checked,
+                consentVolunteer: document.getElementById('consentVolunteer').checked
+            };
+            
+            // 這裡可以接入支付網關
+            alert('支付功能待接入，目前為演示模式。預約信息已記錄。');
+            
+            // 發送確認郵件
+            sendConfirmationEmail(formData);
+        }
+        
+        // 發送確認郵件
+        function sendConfirmationEmail(formData) {
+            // 這裡會調用Google Apps Script發送郵件
+            console.log('發送確認郵件給:', formData.email);
+            alert('確認郵件已發送至: ' + formData.email);
+            
+            // 顯示登錄界面
+            document.getElementById('paymentScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'block';
+        }
+        
+        // 驗證登錄
+        function verifyLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const code = document.getElementById('loginCode').value;
+            
+            if (email && code) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('gameScreen').style.display = 'block';
+                startGame();
+            }
+        }
+        
+        // 重新發送確認碼
+        function resendCode() {
+            alert('確認碼已重新發送至您的郵箱');
+        }
+        
+        // 顯示社交分享
+        function showSocialShare() {
+            const shareDiv = document.getElementById('socialShare');
+            shareDiv.style.display = shareDiv.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // 社交分享
+        function shareSocial(platform) {
+            const text = '我正在參加「九龍記憶庫」AR歷史解謎體驗，探索土瓜灣和九龍城的百年歷史！🏙️';
+            let url = '';
+            
+            switch(platform) {
+                case 'facebook':
+                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+                    break;
+                case 'twitter':
+                    url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+                    break;
+                case 'whatsapp':
+                    url = `https://wa.me/?text=${encodeURIComponent(text + ' ' + window.location.href)}`;
+                    break;
+            }
+            
+            window.open(url, '_blank');
+        }
+    </script>
 </body>
 </html>
